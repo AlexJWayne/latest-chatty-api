@@ -8,3 +8,9 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+
+namespace :db do
+  task :migrate do
+    # Do nothing
+  end
+end

@@ -19,6 +19,10 @@ namespace :deploy do
     run "cd #{current_path} && chmod 755 #{chmod755}"
   end
   
+  task :migrate do
+    # Do nothing
+  end
+  
 end
 
 # ========================

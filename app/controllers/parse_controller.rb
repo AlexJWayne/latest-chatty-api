@@ -5,11 +5,11 @@ class ParseController < ApplicationController
   # end
   
   def index
-    @feed = RootList.new(:story_id => params[:id])
+    @feed = Feed.new(:story_id => params[:id], :parse_children => false)
   end
   
   def thread
-    @feed = Feed.new(:root_id => params[:id])
+    @feed = Feed.new(:root_id => params[:id], :parse_children => true)
     render :action => 'index'
   end
 end

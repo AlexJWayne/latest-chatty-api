@@ -14,7 +14,7 @@ class Feed
     @posts = []
     
     (page / 'div.root').each do |xml|
-      @posts << Post.new(xml, :parent => nil, :parse_children => true)
+      @posts << Post.new(xml, :parent => nil, :parse_children => options[:parse_children])
     end
   end
 end

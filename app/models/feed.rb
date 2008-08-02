@@ -1,5 +1,5 @@
 class Feed
-  attr_accessor :posts
+  attr_accessor :posts, :story_id
   
   def initialize(options = {})
     if options[:story_id]
@@ -12,6 +12,11 @@ class Feed
     
     page = Hpricot(open(url))
     @posts = []
+    
+    @story_id = options[:story_id]
+    if (page / 'div.story h1 a').any?
+      @story_id = (page / 'div.story h1 a').first[:href].gsub('/onearticle.x/', '')
+    end
     
     (page / 'div.root').each do |xml|
       @posts << Post.new(xml, :parent => nil, :parse_children => options[:parse_children])

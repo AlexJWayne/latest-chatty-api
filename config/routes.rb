@@ -34,7 +34,11 @@ ActionController::Routing::Routes.draw do |map|
   # map.root :controller => "welcome"
 
   # See how all your routes lay out with "rake routes"
-  map.root :controller => 'parse', :format => 'xml'
-  map.story ':id.:format', :controller => 'parse', :format => 'xml'
-  map.action_with_id ':action/:id.:format', :controller => 'parse', :format => 'xml'
+  map.root                          :controller => 'parse', :format => 'xml'
+  map.story ':id.:format',          :controller => 'parse'
+  map.thread 'thread/:id.:format',  :controller => 'parse', :action => 'thread'
+  
+  map.create_root 'create/:story_id.:format',       :controller => 'create', :action => 'index'
+  map.create_reply 'create/:story_id/:id.:format',  :controller => 'create', :action => 'index'
+  
 end

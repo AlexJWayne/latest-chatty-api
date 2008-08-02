@@ -1,6 +1,44 @@
 class Post
   attr_accessor :id, :author, :date, :preview, :body, :children, :parent, :category
   
+  def self.create(body, options)
+    username  = options[:username]
+    password  = options[:password]
+    parent_id = options[:parent_id]
+    story_id  = options[:story_id]
+    
+    # get the right cookie
+    cookie = login_cookie(username, password)
+    
+    # Setup the request
+    url = URI.parse('http://www.shacknews.com/post_laryn.x')
+    request = Net::HTTP::Post.new(url.path)
+    request['Cookie'] = cookie
+    request.set_form_data :parent => parent_id,
+                          :group  => story_id,
+                          :dopost => 'dopost',
+                          :body   => body
+    
+    Net::HTTP.new(url.host, url.port).start { |http| http.request(request) }
+  end
+  
+  # Return a cookie that can be used with a post
+  def self.login_cookie(username, password)
+    # Post the login
+    response = Net::HTTP.post_form(URI.parse('http://www.shacknews.com/login_laryn.x'), {
+      :username => username,
+      :password => password,
+      :type     => 'login'
+    })
+    
+    # Get the encrypted password form the responce cookies
+    encrypted_password = response.to_hash['set-cookie'].find { |cookie| cookie =~ /^pass=/ }
+    encrypted_password = encrypted_password.match(/pass=([a-f0-9]+?);/)[1]
+    
+    # Create a cookie string to send back
+    "user=#{username}; pass=#{encrypted_password}"
+  end
+  
   def initialize(xml, options = {})
     # setup an empty array for sollecting child posts
     @children = []

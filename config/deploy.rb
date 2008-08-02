@@ -14,7 +14,7 @@ set :ssh_options, {
 
 set :use_sudo,    false
 set :deploy_to,   "/home/#{user}/sites/#{application}"
-set :chmod755,    "config db public vendor script script/* public/disp*"
+set :chmod755,    "config public vendor script script/* public/disp*"
 
 # set :mongrel_port, "4444"              # Mongrel port that was assigned to you
 # set :mongrel_nodes, "4"                # Number of Mongrel instances for those with multiple Mongrels

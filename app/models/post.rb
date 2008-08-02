@@ -10,6 +10,9 @@ class Post
     # get the right cookie
     cookie = login_cookie(username, password)
     
+    # Abort if authentication failed
+    return :not_authorized if cookie == :not_authorized
+    
     # Setup the request
     url = URI.parse('http://www.shacknews.com/post_laryn.x')
     request = Net::HTTP::Post.new(url.path)
@@ -18,7 +21,7 @@ class Post
                           :group  => story_id,
                           :dopost => 'dopost',
                           :body   => body
-    
+  
     Net::HTTP.new(url.host, url.port).start { |http| http.request(request) }
   end
   
@@ -31,16 +34,20 @@ class Post
       :type     => 'login'
     })
     
-    # Get the encrypted password form the responce cookies
-    encrypted_password = response.to_hash['set-cookie'].find { |cookie| cookie =~ /^pass=/ }
-    encrypted_password = encrypted_password.match(/pass=([a-f0-9]+?);/)[1]
+    if cookie = response.to_hash['set-cookie'].find { |cookie| cookie =~ /^pass=/ }
+      # Get the encrypted password form the response cookies
+      encrypted_password = response.to_hash['set-cookie'].find { |cookie| cookie =~ /^pass=/ }
+      encrypted_password = encrypted_password.match(/pass=([a-f0-9]+?);/)[1]
     
-    # Create a cookie string to send back
-    "user=#{username}; pass=#{encrypted_password}"
+      # Create a cookie string to send back
+      "user=#{username}; pass=#{encrypted_password}"
+    else
+      :not_authorized
+    end
   end
   
   def initialize(xml, options = {})
-    # setup an empty array for sollecting child posts
+    # setup an empty array for collecting child posts
     @children = []
   
     # Save the parent post

@@ -9,7 +9,11 @@ class CreateController < ApplicationController
       :story_id   => params[:story_id]
     })
     
-    render :text => 'Comment posted'
+    if response == :not_authorized
+      render :text => '<error>Authentication failed</error>', :status => '403 Forbidden', :content_type => 'text/xml'
+    else
+      render :text => '<success>Comment posted</success>', :status => '201 Created', :content_type => 'text/xml'
+    end
   end
   
 end

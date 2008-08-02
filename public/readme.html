@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Latest Chatty API</title>
+    <style type="text/css" media="screen">
+      body {
+        background: black;
+        font-family: Helvetica, "Trebuchet MS", sans-serif;
+        font-size: 14px;
+        text-align: center;
+        color: white;
+      }
+      
+      div#wrapper {
+        margin: auto;
+        padding: 10px;
+        text-align: left;
+        width: 500px;
+        background: rgb(50,50,50);
+        -webkit-border-radius: 10px;
+        -mox-border-radius: 10px;
+        border-radius: 10px;
+      }
+      
+      h1 {
+        color: #FFBA00;
+      }
+      
+      h2 {
+        background: #222222;
+        border-top: 1px solid #AEAE9B;
+        margin: 0px;
+        padding: 5px 10px 10px;
+        font-size: 18px;
+      }
+      p {
+        margin-bottom: 45px;
+      }
+      a {
+        color: #AEAE9B;
+      }
+      code {
+        color: #AAA;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      
+      <h1>Latest Chatty API</h1>
+      
+      <p>What follows is some documentation about this API.  If you don't know what this is for, you probably shouldn't be here.</p>
+      
+      <p>All urls are relative to <code><a href="http://latestchatty.beautifulpixel.com/">http://latestchatty.beautifulpixel.com/</a></code></p>
+      
+      <h2>GET /</h2>
+      <p>
+        Retrieve a list of all root posts in the latest chatty.  This does not get the children of those posts, only the root posts.
+      </p>
+      
+      
+      <h2>GET /[story_id].xml</h2>
+      <p>
+        Retrieve a list of all root posts in the news story with a specific <code>story_id</code>.  This does not get the children of those posts, only the root posts.
+      </p>
+      
+      
+      <h2>GET /thread/[root_post_id].xml</h2>
+      <p>
+        Get the entire tree of posts for a thread with has a root post with a specific <code>root_post_id</code>.  This gets all children of those posts with full content for the entire tree.
+      </p>
+      
+      
+      <h2>POST /create/[story_id].xml</h2>
+      <p>
+        Create a new root post in the given <code>story_id</code>.  In the POST request body, 3 form encoded variables are required: <code>body</code>, <code>username</code>, <code>password</code>, and they all do just what it seems like they would do.
+      </p>
+      
+      
+      <h2>POST /create/[story_id]/[post_id].xml</h2>
+      <p>
+        Create a new reply to the post with <code>post_id</code> in the story with <code>story_id</code>.  Expects a POST request body in the same format as creating a root post.
+      </p>
+      
+      
+      <blockquote>
+        <p>By <a href="beautifulpixel.com">Alex Wayne</a></p>
+      </blockquote>
+    </div>
+  </body>
+</html>

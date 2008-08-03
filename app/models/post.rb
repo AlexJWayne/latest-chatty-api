@@ -85,7 +85,7 @@ class Post
     end
     
     # Convert spoiler javascript to something simpler
-    @body = @body.gsub('doSpoiler( event )', 'doSpolier(this)')
+    @body = @body.gsub("return doSpoiler( event )", "this.className = ''")
     
     if options[:parse_children]
       # Create child posts

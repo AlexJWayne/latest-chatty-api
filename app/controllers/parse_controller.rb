@@ -9,7 +9,9 @@ class ParseController < ApplicationController
   end
   
   def thread
-    @feed = Feed.new(:root_id => params[:id], :parse_children => true)
+    bench "overall" do
+      @feed = Feed.new(:root_id => params[:id], :parse_children => true)
+    end
     render :action => 'index'
   end
 end

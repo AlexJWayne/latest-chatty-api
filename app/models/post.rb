@@ -54,34 +54,39 @@ class Post
     @parent = options[:parent]
     
     # Find the id of this post.
-    @id = (is_root?(xml) ? (xml / 'li[@id]').first[:id] : xml[:id]).gsub('item_', '').to_i
+    @id = (is_root?(xml) ? xml.find_first('.//li[@id]').attributes[:id] : xml.attributes[:id]).gsub('item_', '').to_i
     
     post_content_feed = options[:post_content_feed]
     if options[:parse_children]
       # Get the content for a thread.  This should only be done for the root post.
-      post_content_feed ||= Hpricot(open("http://www.shacknews.com/frame_laryn.x?root=#{@id}"))
+      # Get root post content
+      post_content_feed ||= begin
+        parser = LibXML::XML::HTMLParser.new
+        parser.string = bench('get feed') { open("http://www.shacknews.com/frame_laryn.x?root=#{@id}") }.read
+        parser.parse.root
+      end
     end
     
     # Parse the main feed.
     
     # Root post
     if is_root?(xml)
-      @author = (xml / 'span.author a').first.inner_html.strip
-      @date   = (xml / 'div.postdate').first.inner_html.strip
-      @body   = (xml / 'div.postbody').first.inner_html.strip
+      @author = xml.find_first('.//span[@class="author"]/a').content.strip
+      @date   = xml.find_first('.//div[@class="postdate"]').content.strip
+      @body   = xml.find_first('.//div[@class="postbody"]').to_s.inner_html.strip
       
       @preview = @body.gsub(/<.+?>/, '')[0..100]
       
-      child_selector = 'div.capcontainer>ul>li'
+      child_selector = './/div[@class="capcontainer"]/ul/li'
     
     # Child post
     else
-      @author = (xml / 'a.oneline_user').first.inner_html.strip
-      @date   = (post_content_feed / "div#item_#{@id} div.postdate").first.inner_html.strip
-      @body   = (post_content_feed / "div#item_#{@id} div.postbody").first.inner_html.strip
-      @preview = (xml / 'span.oneline_body').first.inner_html.strip.gsub(/<.+?>/, '')
+      @author = xml.find_first('.//a[@class="oneline_user"]').content.strip
+      @date   = post_content_feed.find_first("//div[@id='item_#{@id}']//div[@class='postdate']").content.strip
+      @body   = post_content_feed.find_first(".//div[@id='item_#{@id}']//div[@class='postbody']").to_s.inner_html.strip
+      @preview = xml.find_first('.//span[@class="oneline_body"]').to_s.inner_html.strip.gsub(/<.+?>/, '')
       
-      child_selector = '>ul>li'
+      child_selector = 'ul/li'
     end
     
     # Convert spoiler javascript to something simpler
@@ -89,7 +94,7 @@ class Post
     
     if options[:parse_children]
       # Create child posts
-      (xml / child_selector).each do |child_post|
+      xml.find(child_selector).each do |child_post|
         @children << Post.new(child_post, :parent => self, :post_content_feed => post_content_feed, :parse_children => options[:parse_children])
       end
     end
@@ -97,12 +102,7 @@ class Post
   
   private
     def is_root?(xml)
-      (xml / 'div.postbody').any?
+      xml.find_first('ul/li/div/div[@class="postbody"]')
     end
-    
-    def bench(name)
-      start = Time.now
-      yield
-      puts "=== Benchmark:#{name}: #{Time.now - start}"
-    end
+
 end

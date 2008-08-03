@@ -67,4 +67,20 @@ Rails::Initializer.run do |config|
 end
 
 require 'open-uri'
-require 'hpricot'
+require 'libxml'
+
+class Object
+  def bench(name)
+    start = Time.now
+    return_value = yield
+    puts "=== Benchmark:#{name}: #{Time.now - start}"
+    
+    return_value
+  end
+end
+
+class String
+  def inner_html
+    self.gsub(/^<.+?>(.*)<.+?>$/m, '\1')
+  end
+end

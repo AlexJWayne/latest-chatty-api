@@ -87,9 +87,10 @@ class Post
     
     # Prepare preview
     @preview = @body.dup
+    @preview.gsub!('&#13;', ' ')                                    # remove line break entities
     @preview.gsub!(/<span class="jt_spoiler".+?<\/span>/, '______') # remove spoilers
-    @preview.gsub!(/<.+?>/, '') # strip all html tags
-    @preview = @preview[0..150] #truncate to 150 character max
+    @preview.gsub!(/<.+?>/, '')                                     # strip all html tags
+    @preview = @preview[0..150]                                     # truncate to 150 character max
     
     # Convert spoiler javascript to something simpler
     @body = @body.gsub("return doSpoiler( event )", "this.className = ''")

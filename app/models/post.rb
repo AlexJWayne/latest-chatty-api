@@ -59,7 +59,6 @@ class Post
     post_content_feed = options[:post_content_feed]
     if options[:parse_children]
       # Get the content for a thread.  This should only be done for the root post.
-      # Get root post content
       post_content_feed ||= begin
         parser = LibXML::XML::HTMLParser.new
         parser.string = bench('get feed') { open("http://www.shacknews.com/frame_laryn.x?root=#{@id}") }.read
@@ -75,8 +74,6 @@ class Post
       @date   = xml.find_first('.//div[@class="postdate"]').content.strip
       @body   = xml.find_first('.//div[@class="postbody"]').to_s.inner_html.strip
       
-      @preview = @body.gsub(/<.+?>/, '')[0..100]
-      
       child_selector = './/div[@class="capcontainer"]/ul/li'
     
     # Child post
@@ -84,10 +81,15 @@ class Post
       @author = xml.find_first('.//a[@class="oneline_user"]').content.strip
       @date   = post_content_feed.find_first("//div[@id='item_#{@id}']//div[@class='postdate']").content.strip
       @body   = post_content_feed.find_first(".//div[@id='item_#{@id}']//div[@class='postbody']").to_s.inner_html.strip
-      @preview = xml.find_first('.//span[@class="oneline_body"]').to_s.inner_html.strip.gsub(/<.+?>/, '')
       
       child_selector = 'ul/li'
     end
+    
+    # Prepare preview
+    @preview = @body.dup
+    @preview.gsub!(/<span class="jt_spoiler".+?<\/span>/, '______') # remove spoilers
+    @preview.gsub!(/<.+?>/, '') # strip all html tags
+    @preview = @preview[0..150] #truncate to 150 character max
     
     # Convert spoiler javascript to something simpler
     @body = @body.gsub("return doSpoiler( event )", "this.className = ''")

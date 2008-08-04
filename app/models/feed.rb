@@ -18,13 +18,13 @@ class Feed
     
     # Assign story id
     unless @story_id = options[:story_id]
-      story = page.find_first('.//div[@class="story"]//h1//a')
+      story = page.find_first('.//div[contains(@class, "story")]//h1//a')
       @story_id = story[:href].gsub('/onearticle.x/', '') if story
     end
     
     # Parse posts
     @posts = []
-    page.find('.//div[@class="root"]').each do |xml|
+    page.find('.//div[contains(@class, "root")]').each do |xml|
       @posts << Post.new(xml, :parent => nil, :parse_children => options[:parse_children])
     end
   end

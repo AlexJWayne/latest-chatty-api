@@ -4,7 +4,7 @@ class Feed
   def initialize(options = {})
     # decide where to get the feed
     if options[:story_id]
-      url = "http://www.shacknews.com/laryn.x?story=#{options[:story_id]}"
+      url = "http://www.shacknews.com/laryn.x?story=#{options[:story_id]}&page=#{options[:page] || 1}"
     elsif options[:root_id]
       url = "http://www.shacknews.com/frame_laryn.x?root=#{options[:root_id]}&id=#{options[:root_id]}&mode=refresh"
     else

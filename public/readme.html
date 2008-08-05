@@ -56,13 +56,19 @@
       
       <h2>GET /</h2>
       <p>
-        Retrieve a list of all root posts in the latest chatty.  This does not get the children of those posts, only the root posts.
+        Retrieve a list of page 1 root posts in the latest chatty.  This does not get the children of those posts, only the root posts.
       </p>
       
       
       <h2>GET /[story_id].xml</h2>
       <p>
-        Retrieve a list of all root posts in the news story with a specific <code>story_id</code>.  This does not get the children of those posts, only the root posts.
+        Retrieve a list of page 1 root posts in the news story with a specific <code>story_id</code>.  This does not get the children of those posts, only the root posts.
+      </p>
+      
+      
+      <h2>GET /[story_id].[page_number].xml</h2>
+      <p>
+        Retrieve a list of root posts in the news story with a specific <code>story_id</code> on page <code>page_number</code>.  This does not get the children of those posts, only the root posts.
       </p>
       
       

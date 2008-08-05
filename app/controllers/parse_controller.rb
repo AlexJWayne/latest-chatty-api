@@ -5,7 +5,7 @@ class ParseController < ApplicationController
   # end
   
   def index
-    @feed = Feed.new(:story_id => params[:id], :parse_children => false)
+    @feed = Feed.new(:story_id => params[:id], :page => params[:page], :parse_children => false)
   end
   
   def thread

@@ -1,5 +1,5 @@
 class Post
-  attr_accessor :id, :author, :date, :preview, :body, :children, :parent, :category, :reply_count
+  attr_accessor :id, :author, :date, :preview, :body, :children, :parent, :category, :reply_count, :last_reply_id
   
   def self.create(body, options)
     username  = options[:username]
@@ -73,7 +73,8 @@ class Post
       @author = xml.find_first('.//span[contains(@class, "author")]/a').content.strip
       @date   = xml.find_first('.//div[contains(@class, "postdate")]').content.strip
       @body   = xml.find_first('.//div[contains(@class, "postbody")]').to_s.inner_html.strip
-      @reply_count = xml.find_first('//p[contains(@class, "capnote")]/a/strong').to_s.inner_html.gsub('&#13;', '').strip.to_i
+      @reply_count   = xml.find_first('//p[contains(@class, "capnote")]/a/strong').to_s.inner_html.gsub('&#13;', '').strip.to_i
+      @last_reply_id = xml.find_first('.//div[contains(@class, "oneline0")]/a').attributes[:href].gsub('laryn.x?id=', '').to_i
       
       child_selector = './/div[contains(@class, "capcontainer")]/ul/li'
     

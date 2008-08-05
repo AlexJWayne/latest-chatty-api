@@ -4,10 +4,11 @@ module ParseHelper
       :id => post.id,
       :author => post.author,
       :date => post.date,
-      :preview => post.preview
+      :preview => post.preview,
+      :reply_count => post.reply_count
     }
     
-    attributes[:reply_count] = post.reply_count if post.reply_count
+    attributes[:last_reply_id] = post.last_reply_id if post.last_reply_id
     
     xml.comment attributes do
       xml.body post.body

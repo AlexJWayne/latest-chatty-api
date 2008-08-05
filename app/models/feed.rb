@@ -25,7 +25,9 @@ class Feed
     end
     
     # get last page number
-    @last_page = page.find('//div[contains(@class, "pagenavigation")]/a').find_all { |element| element.content =~ /\d+/ }.last.content.strip.to_i
+    if page.find_first('//div[contains(@class, "pagenavigation")]')
+      @last_page = page.find('//div[contains(@class, "pagenavigation")]/a').find_all { |element| element.content =~ /\d+/ }.last.content.strip.to_i
+    end
     
     # Parse posts
     @posts = []

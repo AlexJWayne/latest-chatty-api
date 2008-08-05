@@ -1,10 +1,12 @@
 class Feed
-  attr_accessor :posts, :story_id
+  attr_accessor :posts, :story_id, :page, :last_page
   
   def initialize(options = {})
+    @page = options[:page] || 1
+    
     # decide where to get the feed
     if options[:story_id]
-      url = "http://www.shacknews.com/laryn.x?story=#{options[:story_id]}&page=#{options[:page] || 1}"
+      url = "http://www.shacknews.com/laryn.x?story=#{options[:story_id]}&page=#{@page}"
     elsif options[:root_id]
       url = "http://www.shacknews.com/frame_laryn.x?root=#{options[:root_id]}&id=#{options[:root_id]}&mode=refresh"
     else
@@ -21,6 +23,9 @@ class Feed
       story = page.find_first('.//div[contains(@class, "story")]//h1//a')
       @story_id = story[:href].gsub('/onearticle.x/', '') if story
     end
+    
+    # get last page number
+    @last_page = page.find('//div[contains(@class, "pagenavigation")]/a').find_all { |element| element.content =~ /\d+/ }.last.content.strip.to_i
     
     # Parse posts
     @posts = []

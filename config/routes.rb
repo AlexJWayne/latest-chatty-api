@@ -36,6 +36,7 @@ ActionController::Routing::Routes.draw do |map|
   # See how all your routes lay out with "rake routes"
   map.root                          :controller => 'parse', :format => 'xml'
   map.story ':id.:format',          :controller => 'parse'
+  map.story ':id.:page.:format',    :controller => 'parse'
   map.thread 'thread/:id.:format',  :controller => 'parse', :action => 'thread'
   
   map.create_root 'create/:story_id.:format',       :controller => 'create', :action => 'index'

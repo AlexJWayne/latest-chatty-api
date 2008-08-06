@@ -25,7 +25,7 @@ class Feed
     end
     
     # get last page number
-    if page.find_first('//div[contains(@class, "pagenavigation")]')
+    if page.find_first('//div[contains(@class, "pagenavigation")]/a')
       @last_page = page.find('//div[contains(@class, "pagenavigation")]/a').find_all { |element| element.content =~ /\d+/ }.last.content.strip.to_i
     end
     

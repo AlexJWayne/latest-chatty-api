@@ -35,4 +35,13 @@ class Feed
       @posts << Post.new(xml, :parent => nil, :parse_children => options[:parse_children])
     end
   end
+  
+  def to_json
+    {
+      :story_id => @story_id,
+      :page => @page,
+      :last_page => @last_page,
+      :comments => @posts.collect(&:to_hash)
+    }.to_json
+  end
 end

@@ -106,6 +106,23 @@ class Post
     end
   end
   
+  def to_hash
+    {
+      :id => @id,
+      :author => @author,
+      :date => @date,
+      :preview => @preview,
+      :body => @body,
+      :reply_count => @reply_count,
+      :last_reply_id => @last_reply_id,
+      :comments => @children.collect(&:to_hash),
+    }
+  end
+  
+  def to_json
+    to_hash.to_json
+  end
+  
   private
     def is_root?(xml)
       xml.find_first('ul/li/div/div[contains(@class, "postbody")]')

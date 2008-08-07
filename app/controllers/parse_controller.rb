@@ -5,6 +5,7 @@ class ParseController < ApplicationController
   # end
   
   def index
+    Feed.work_safe = request.subdomains.include?('ws')
     @feed = Feed.new(:story_id => params[:id], :page => params[:page], :parse_children => false)
   end
   

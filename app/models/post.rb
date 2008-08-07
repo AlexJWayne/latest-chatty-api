@@ -106,7 +106,8 @@ class Post
     if options[:parse_children]
       # Create child posts
       xml.find(child_selector).each do |child_post|
-        @children << Post.new(child_post, :parent => self, :post_content_feed => post_content_feed, :parse_children => options[:parse_children])
+        post = Post.new(child_post, :parent => self, :post_content_feed => post_content_feed, :parse_children => options[:parse_children])
+        @children << post unless post.category == 'nws' && Feed.work_safe
       end
     end
   end

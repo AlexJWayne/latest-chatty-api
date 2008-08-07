@@ -42,5 +42,4 @@ ActionController::Routing::Routes.draw do |map|
   
   map.create_root 'create/:story_id.:format',       :controller => 'create', :action => 'index'
   map.create_reply 'create/:story_id/:id.:format',  :controller => 'create', :action => 'index'
-  
 end

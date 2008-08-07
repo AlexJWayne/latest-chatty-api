@@ -76,6 +76,7 @@ class Post
       @reply_count   = xml.find_first('.//p[contains(@class, "capnote")]/a/strong').to_s.inner_html.gsub('&#13;', '').strip.to_i
       @last_reply_id = xml.find_first('.//div[contains(@class, "oneline0")]/a').attributes[:href].gsub('laryn.x?id=', '').to_i
       
+      cat_node       = xml.find_first('ul/li/div[contains(@class, "fpmod_")]')
       child_selector = './/div[contains(@class, "capcontainer")]/ul/li'
     
     # Child post
@@ -85,6 +86,7 @@ class Post
       @body   = post_content_feed.find_first(".//div[@id='item_#{@id}']//div[contains(@class, 'postbody')]").to_s.inner_html.strip
       @reply_count = xml.find('.//li').size
       
+      cat_node       = xml.find_first('div[contains(@class, "olmod_")]')
       child_selector = 'ul/li'
     end
     
@@ -94,6 +96,9 @@ class Post
     @preview.gsub!(/<span class="jt_spoiler".+?<\/span>/, '______') # remove spoilers
     @preview.gsub!(/<.+?>/, '')                                     # strip all html tags
     @preview = @preview[0..150]                                     # truncate to 150 character max
+    
+    # Grab category
+    @category = cat_node.attributes[:class].split(' ').find { |cls| cls =~ /mod_/ }.gsub(/^(fp|ol)mod_/, '') if cat_node
     
     # Convert spoiler javascript to something simpler
     @body = @body.gsub("return doSpoiler( event )", "this.className = ''")
@@ -115,6 +120,7 @@ class Post
       :body => @body,
       :reply_count => @reply_count,
       :last_reply_id => @last_reply_id,
+      :category => @category,
       :comments => @children.collect(&:to_hash),
     }
   end

@@ -5,7 +5,8 @@ module ParseHelper
       :author => post.author,
       :date => post.date,
       :preview => post.preview,
-      :reply_count => post.reply_count
+      :reply_count => post.reply_count,
+      :category => post.category,
     }
     
     attributes[:last_reply_id] = post.last_reply_id if post.last_reply_id

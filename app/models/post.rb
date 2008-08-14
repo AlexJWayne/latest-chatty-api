@@ -6,9 +6,9 @@ class Post
     password  = options[:password]
     parent_id = options[:parent_id]
     story_id  = options[:story_id]
-    
-    # get the right cookie
-    cookie = login_cookie(username, password)
+        
+    # get the login cookie
+    cookie = LoginCookie.new(username, password)
     
     # Abort if authentication failed
     return :not_authorized if cookie == :not_authorized
@@ -16,34 +16,23 @@ class Post
     # Setup the request
     url = URI.parse('http://www.shacknews.com/post_laryn.x')
     request = Net::HTTP::Post.new(url.path)
-    request['Cookie'] = cookie
+    request['Cookie'] = cookie.string
     request.set_form_data :parent => parent_id,
                           :group  => story_id,
                           :dopost => 'dopost',
                           :body   => body
-  
+    
     Net::HTTP.new(url.host, url.port).start { |http| http.request(request) }
-  end
-  
-  # Return a cookie that can be used with a post
-  def self.login_cookie(username, password)
-    # Post the login
-    response = Net::HTTP.post_form(URI.parse('http://www.shacknews.com/login_laryn.x'), {
-      :username => username,
-      :password => password,
-      :type     => 'login'
-    })
     
-    if cookie = response.to_hash['set-cookie'].find { |cookie| cookie =~ /^pass=/ }
-      # Get the encrypted password form the response cookies
-      encrypted_password = response.to_hash['set-cookie'].find { |cookie| cookie =~ /^pass=/ }
-      encrypted_password = encrypted_password.match(/pass=([a-f0-9]+?);/)[1]
+    # response = Net::HTTP.post_form URI.parse('http://www.shacknews.com/extras/post_laryn_iphone.x'), {
+    #   :iuser  => username,
+    #   :ipass  => password,
+    #   :parent => parent_id,
+    #   :group  => story_id,
+    #   :dopost => 'dopost',
+    #   :body   => body,
+    # }
     
-      # Create a cookie string to send back
-      "user=#{username}; pass=#{encrypted_password}"
-    else
-      :not_authorized
-    end
   end
   
   def initialize(xml, options = {})

@@ -1,6 +1,6 @@
 class Feed
   cattr_accessor :work_safe
-  attr_accessor :posts, :story_id, :page, :last_page
+  attr_accessor :posts, :story_id, :story_name, :page, :last_page
   
   @@work_safe = false
   
@@ -22,10 +22,13 @@ class Feed
     page = parser.parse.root
     
     # Assign story id
+    story = page.find_first('.//div[contains(@class, "story")]//h1//a')
     unless @story_id = options[:story_id]
-      story = page.find_first('.//div[contains(@class, "story")]//h1//a')
       @story_id = story[:href].gsub('/onearticle.x/', '') if story
     end
+    
+    # Story Name
+    @story_name = story.content if story
     
     # get last page number
     if page.find_first('//div[contains(@class, "pagenavigation")]/a')
@@ -43,6 +46,7 @@ class Feed
   def to_json
     {
       :story_id => @story_id,
+      :story_name => @story_name,
       :page => @page,
       :last_page => @last_page,
       :comments => @posts.collect(&:to_hash)

@@ -6,23 +6,20 @@ class Post
     password  = options[:password]
     parent_id = options[:parent_id]
     story_id  = options[:story_id]
-        
-    # get the login cookie
-    cookie = LoginCookie.new(username, password)
     
-    # Abort if authentication failed
-    return :not_authorized if cookie == :not_authorized
+    response = PrivateRequest.new(username, password, 'http://www.shacknews.com/post_laryn.x', :post => {
+      :parent => parent_id,
+      :group  => story_id,
+      :dopost => 'dopost',
+      :body   => body
+    })
     
-    # Setup the request
-    url = URI.parse('http://www.shacknews.com/post_laryn.x')
-    request = Net::HTTP::Post.new(url.path)
-    request['Cookie'] = cookie.string
-    request.set_form_data :parent => parent_id,
-                          :group  => story_id,
-                          :dopost => 'dopost',
-                          :body   => body
-    
-    Net::HTTP.new(url.host, url.port).start { |http| http.request(request) }
+    if response.status == :not_authorized
+      response.status
+    else
+      true
+    end
+
     
     # response = Net::HTTP.post_form URI.parse('http://www.shacknews.com/extras/post_laryn_iphone.x'), {
     #   :iuser  => username,

@@ -18,7 +18,7 @@ class Feed
     
     # Get root post content
     parser = LibXML::XML::HTMLParser.new
-    parser.string = bench('get feed') { open(url) }.read.gsub(/="\s*(.+?)\s*"/, '="\1"')
+    parser.string = open(url).read.gsub(/="\s*(.+?)\s*"/, '="\1"')
     page = parser.parse.root
     
     # Assign story id

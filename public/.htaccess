@@ -31,6 +31,9 @@ RewriteRule ^([^.]+)$ $1.html [QSA]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ dispatch.fcgi [QSA,L]
 
+# Make sure basic authentication works
+RewriteRule ^(.*)$ dispatch.fcgi [E=X-HTTP_AUTHORIZATION:%{HTTP:Authorization},QSA,L]
+
 # In case Rails experiences terminal errors
 # Instead of displaying this message you can supply a file here which will be rendered instead
 # 

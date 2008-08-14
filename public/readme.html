@@ -83,6 +83,25 @@
       </p>
       
       
+      <h1>Posting</h1>
+      
+      <h2>POST http://www.shacknews.com/extras/post_laryn_iphone.x</h2>
+      
+      <p>Simply send a POST request to this URL with the following form encoded variables in the request body</p>
+      
+      <ul>
+        <li><code>iuser</code>: username</li>
+        <li><code>ipass</code>: password</li>
+        <li><code>parent_id</code>: The ID of the post that is being replied to.  Leave blank it its a new root post.</li>
+        <li><code>group</code>: The story ID this post is getting attached to.</li>
+        <li><code>body</code>: The text content of the comment.</li>
+      </ul>
+      
+      
+      <h1>Deprecated Posting API</h1>
+      
+      <p>The items below are deprecated, but still work.  It is strongly advised you post directly using the method above.  If you use this, and some hacker ILTC's you, you can't say I didn't warn you.</p>
+      
       <h2>POST /create/[story_id].xml</h2>
       <p>
         Create a new root post in the given <code>story_id</code>.  In the POST request body, 3 form encoded variables are required: <code>body</code>, <code>username</code>, <code>password</code>, and they all do just what it seems like they would do.

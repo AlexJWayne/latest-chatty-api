@@ -34,6 +34,8 @@ ActionController::Routing::Routes.draw do |map|
   # map.root :controller => "welcome"
 
   # See how all your routes lay out with "rake routes"
+  map.resources :messages, :member => { :read => :get }
+  
   map.root                          :controller => 'parse', :format => 'xml'
   map.root_index 'index.:format',   :controller => 'parse', :format => 'xml'
   map.story ':id.:format',          :controller => 'parse'
@@ -42,4 +44,5 @@ ActionController::Routing::Routes.draw do |map|
   
   map.create_root 'create/:story_id.:format',       :controller => 'create', :action => 'index'
   map.create_reply 'create/:story_id/:id.:format',  :controller => 'create', :action => 'index'
+  
 end

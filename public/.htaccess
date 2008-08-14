@@ -29,9 +29,6 @@ RewriteEngine On
 RewriteRule ^$ index.html [QSA]
 RewriteRule ^([^.]+)$ $1.html [QSA]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ dispatch.fcgi [QSA,L]
-
-# Make sure basic authentication works
 RewriteRule ^(.*)$ dispatch.fcgi [E=X-HTTP_AUTHORIZATION:%{HTTP:Authorization},QSA,L]
 
 # In case Rails experiences terminal errors

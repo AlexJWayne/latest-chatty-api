@@ -7,20 +7,6 @@ class Post
     parent_id = options[:parent_id]
     story_id  = options[:story_id]
     
-    # response = PrivateRequest.new(username, password, 'http://www.shacknews.com/post_laryn.x', :post => {
-    #   :parent => parent_id,
-    #   :group  => story_id,
-    #   :dopost => 'dopost',
-    #   :body   => body
-    # })
-    # 
-    # if response.status == :not_authorized
-    #   response.status
-    # else
-    #   true
-    # end
-
-    
     response = Net::HTTP.post_form URI.parse('http://www.shacknews.com/extras/post_laryn_iphone.x'), {
       :iuser  => username,
       :ipass  => password,

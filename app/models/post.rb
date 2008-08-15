@@ -72,6 +72,8 @@ class Post
     # Prepare preview
     @preview = @body.dup
     @preview.gsub!('&#13;', ' ')                                    # remove line break entities
+    @preview.gsub!(/<br.*?>/, ' ')                                  # remove <br />'s
+    @preview.gsub!(/\s+/, ' ')                                      # remove consecutive spaces
     @preview.gsub!(/<span class="jt_spoiler".+?<\/span>/, '______') # remove spoilers
     @preview.gsub!(/<.+?>/, '')                                     # strip all html tags
     @preview = @preview[0..150]                                     # truncate to 150 character max

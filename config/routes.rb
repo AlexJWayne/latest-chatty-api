@@ -35,6 +35,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # See how all your routes lay out with "rake routes"
   map.resources :messages, :member => { :read => :get }
+  map.resources :images
+  
   
   map.root                          :controller => 'parse', :format => 'xml'
   map.root_index 'index.:format',   :controller => 'parse', :format => 'xml'

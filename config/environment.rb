@@ -64,6 +64,8 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
+  
+  config.gem "multipart-post", :lib => "net/http/post/multipart"
 end
 
 require 'open-uri'

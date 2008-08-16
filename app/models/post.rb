@@ -16,16 +16,11 @@ class Post
       :body   => body,
     }
     
-    puts '-'*80
-    puts response.body
-    
     case response.body
     when /You must be logged in/
       :not_authorized
-    when /Please wait a few/
-      :not_acceptable
     else
-      :created
+      true
     end
     
   end

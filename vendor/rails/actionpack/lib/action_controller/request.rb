@@ -483,8 +483,10 @@ EOM
       end
 
       def clean_up_ajax_request_body!(body)
-        body.chop! if body[-1] == 0
-        body.gsub!(/&_=$/, '')
+        if body
+          body.chop! if body[-1] == 0
+          body.gsub!(/&_=$/, '')
+        end
       end
 
 

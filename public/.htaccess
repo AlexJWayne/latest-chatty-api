@@ -29,7 +29,8 @@ RewriteEngine On
 RewriteRule ^$ index.html [QSA]
 RewriteRule ^([^.]+)$ $1.html [QSA]
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ dispatch.fcgi [E=X-HTTP_AUTHORIZATION:%{HTTP:Authorization},QSA,L]
+#RewriteRule ^(.*)$ dispatch.fcgi [E=X-HTTP_AUTHORIZATION:%{HTTP:Authorization},QSA,L]
+RewriteRule ^(.*)$ dispatch.fcgi [QSA,L]
 
 # In case Rails experiences terminal errors
 # Instead of displaying this message you can supply a file here which will be rendered instead
@@ -37,4 +38,4 @@ RewriteRule ^(.*)$ dispatch.fcgi [E=X-HTTP_AUTHORIZATION:%{HTTP:Authorization},Q
 # Example:
 #   ErrorDocument 500 /500.html
 
-# ErrorDocument 500 "<h2>Application error</h2>Rails application failed to start properly"
+ErrorDocument 500 "<h2>Application error</h2>Rails application failed to start properly"

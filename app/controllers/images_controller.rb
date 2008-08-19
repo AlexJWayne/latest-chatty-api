@@ -19,7 +19,7 @@ class ImagesController < ApplicationController
       page = parser.parse.root
       
       puts response.body
-    
+      
       render :text => "<success>#{page.find_first("//input[@id='link11']")[:value]}</success>", :status => :created
     else
       render :text => "<error>Not Authorized</error>", :status => :forbidden

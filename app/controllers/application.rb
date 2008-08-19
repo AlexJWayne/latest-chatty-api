@@ -6,5 +6,5 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password
   
-  session :off
+  # session :off
 end

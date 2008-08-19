@@ -26,7 +26,6 @@ class LoginCookie
   
   class ShackPics < LoginCookie
     def initialize(username, password)
-      
       response = `curl -i -d "user_name=#{username}&user_password=#{password}" http://www.shackpics.com/users.x?act=login_go`
       puts response
       

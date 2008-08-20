@@ -20,7 +20,7 @@ class ImagesController < ApplicationController
       
       puts response.body
       
-      @file_url = "<success>#{page.find_first("//input[@id='link11']")[:value]}</success>"
+      @file_url = page.find_first("//input[@id='link11']")[:value]
       render :status => :created
     else
       @error = 'Not Authorized'

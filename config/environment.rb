@@ -87,4 +87,4 @@ class String
   end
 end
 
-ExceptionNotifier.exception_recipients = %w(ruby@beautifulpixel.com)
+# ExceptionNotifier.exception_recipients = %w(ruby@beautifulpixel.com)

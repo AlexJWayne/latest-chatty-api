@@ -42,7 +42,10 @@ namespace :deploy do
   end
 
   task :restart, :roles => :app do
-    run "cd #{current_path} && mongrel_rails restart"
+    stop
+    sleep 1
+    start
+    
     run "cd #{current_path} && chmod 755 #{chmod755}"
   end
 

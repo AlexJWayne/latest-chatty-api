@@ -53,7 +53,10 @@ class Post
       @date   = xml.find_first('.//div[contains(@class, "postdate")]').content.strip
       @body   = xml.find_first('.//div[contains(@class, "postbody")]').to_s.inner_html.strip
       @reply_count   = xml.find_first('.//p[contains(@class, "capnote")]/a/strong').to_s.inner_html.gsub('&#13;', '').strip.to_i
-      @last_reply_id = xml.find_first('.//div[contains(@class, "oneline0")]/a').attributes[:href].gsub('laryn.x?id=', '').to_i
+      
+      if element = xml.find_first('.//div[contains(@class, "oneline0")]/a')
+        @last_reply_id = element.attributes[:href].gsub('laryn.x?id=', '').to_i
+      end
       
       cat_node       = xml.find_first('ul/li/div[contains(@class, "fpmod_")]')
       child_selector = './/div[contains(@class, "capcontainer")]/ul/li'

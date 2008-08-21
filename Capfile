@@ -35,6 +35,11 @@ namespace :deploy do
     # run "rm -rf /home/#{user}/public_html;ln -s #{current_path}/public /home/#{user}/public_html"
     run "cd #{current_path} && mongrel_rails start -e production -p #{mongrel_port} -d"
   end
+  
+  task :stop, :roles => :app do
+    # run "rm -rf /home/#{user}/public_html;ln -s #{current_path}/public /home/#{user}/public_html"
+    run "cd #{current_path} && mongrel_rails stop"
+  end
 
   task :restart, :roles => :app do
     run "cd #{current_path} && mongrel_rails restart"

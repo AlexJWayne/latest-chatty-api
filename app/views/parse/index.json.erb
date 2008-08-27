@@ -1,1 +1,5 @@
-<%= @feed.to_json %>
+<% if params[:callback] %>
+  <%= params[:callback] %>(<%= @feed.to_json %>)
+<% else %>
+  <%= @feed.to_json %>
+<% end %>

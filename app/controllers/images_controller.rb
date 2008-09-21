@@ -22,6 +22,9 @@ class ImagesController < ApplicationController
       
       @file_url = page.find_first("//input[@id='link11']")[:value]
       render :status => :created
+      
+      RAILS_DEFAULT_LOGGER.fatal "\n\nreturned file url: #{@file_url}\n\n"
+      
     else
       @error = 'Not Authorized'
       render :status => :forbidden

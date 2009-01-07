@@ -69,6 +69,8 @@ Rails::Initializer.run do |config|
 end
 
 require 'open-uri'
+
+gem 'libxml-ruby', '=0.8.3'
 require 'libxml'
 
 class Object

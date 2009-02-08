@@ -34,6 +34,7 @@ ActionController::Routing::Routes.draw do |map|
   # map.root :controller => "welcome"
 
   # See how all your routes lay out with "rake routes"
+  map.resources :stories
   map.resources :messages, :member => { :read => :get }
   map.resources :images
   

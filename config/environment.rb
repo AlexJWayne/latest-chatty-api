@@ -87,6 +87,10 @@ class String
   def inner_html
     self.gsub(/^<.+?>(.*)<.+?>$/m, '\1')
   end
+  
+  def clean_html
+    self.gsub(/="\s*(.+?)\s*"/, '="\1"')
+  end
 end
 
 # ExceptionNotifier.exception_recipients = %w(ruby@beautifulpixel.com)

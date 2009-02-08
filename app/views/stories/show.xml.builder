@@ -1,0 +1,1 @@
+xml << @story.to_xml

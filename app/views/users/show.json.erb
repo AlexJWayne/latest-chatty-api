@@ -1,0 +1,5 @@
+<% if params[:callback] %>
+  <%= params[:callback] %>(<%= @user.to_json %>)
+<% else %>
+  <%= @user.to_json %>
+<% end %>

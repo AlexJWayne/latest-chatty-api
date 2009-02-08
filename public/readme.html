@@ -56,6 +56,8 @@
       
       <p>The below examples are all XML, but JSON is supported as well.  Simply replace the ".xml" with a ".json" in the url.</p>
       
+      <h1>Chat Threads</h1>
+      
       <h2>
         GET /<br/>
         GET /index.xml
@@ -112,6 +114,24 @@
       <p>
         Create a new reply to the post with <code>post_id</code> in the story with <code>story_id</code>.  Expects a POST request body in the same format as creating a root post.
       </p>
+      
+      
+      
+      <h1>Stories</h1>
+      
+      <h2>GET /stories.xml</h2>
+      <p>Returns a list of all stories currently on the homepage.  Story body is limited to what the homepage content is truncated to.</p>
+      
+      <h2>GET /stories/[story_id].xml</h2>
+      <p>Returns a single full story with all the HTML content for that story.</p>
+      
+      
+      
+      <h1>Users</h1>
+      
+      <h2>GET /users/[username].xml</h2>
+      <p>Returns public data for a single user.</p>
+      
       
       
       <blockquote>

@@ -27,7 +27,7 @@ class Feed
     if options[:parse_children]
       # thread request, so we wont have the story data
       
-      story_page = open("http://www.shacknews.com/laryn.x?id=19528684").read.clean_html
+      story_page = open("http://www.shacknews.com/laryn.x?id=#{options[:root_id]}").read.clean_html
       story = Story.new
       story.parse_html(story_page)
       

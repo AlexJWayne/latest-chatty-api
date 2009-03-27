@@ -7,6 +7,8 @@ class Feed
   def initialize(options = {})
     @page = options[:page] || 1
     
+    @last_page = 1
+    
     # decide where to get the feed
     if options[:story_id]
       url = "http://www.shacknews.com/laryn.x?story=#{options[:story_id]}&page=#{@page}"
@@ -21,14 +23,25 @@ class Feed
     parser.string = open(url).read.clean_html
     page = parser.parse.root
     
-    # Assign story id
-    story = page.find_first('.//div[contains(@class, "story")]//h1//a')
-    unless @story_id = options[:story_id]
-      @story_id = story[:href].gsub('/onearticle.x/', '') if story
-    end
     
-    # Story Name
-    @story_name = story.content if story
+    if options[:parse_children]
+      # thread request, so we wont have the story data
+      
+      story_page = open("http://www.shacknews.com/laryn.x?id=19528684").read.clean_html
+      story = Story.new
+      story.parse_html(story_page)
+      
+      @story_id = story.id
+      @story_name = story.name
+    else
+      
+      story = page.find_first('.//div[contains(@class, "story")]//h1//a')
+      unless @story_id = options[:story_id]
+        @story_id = story[:href].gsub('/onearticle.x/', '') if story
+      end
+
+      @story_name = story.content if story
+    end    
     
     # get last page number
     if page.find_first('//div[contains(@class, "pagenavigation")]/a')

@@ -100,23 +100,6 @@
       </ul>
       
       
-      <h1>Deprecated Posting API</h1>
-      
-      <p>The items below are deprecated, but still work.  It is strongly advised you post directly using the method above.  If you use this, and some hacker ILTC's you, you can't say I didn't warn you.</p>
-      
-      <h2>POST /create/[story_id].xml</h2>
-      <p>
-        Create a new root post in the given <code>story_id</code>.  In the POST request body, 3 form encoded variables are required: <code>body</code>, <code>username</code>, <code>password</code>, and they all do just what it seems like they would do.
-      </p>
-      
-      
-      <h2>POST /create/[story_id]/[post_id].xml</h2>
-      <p>
-        Create a new reply to the post with <code>post_id</code> in the story with <code>story_id</code>.  Expects a POST request body in the same format as creating a root post.
-      </p>
-      
-      
-      
       <h1>Stories</h1>
       
       <h2>GET /stories.xml</h2>
@@ -132,6 +115,27 @@
       <h2>GET /users/[username].xml</h2>
       <p>Returns public data for a single user.</p>
       
+      
+      <h1>Messages</h1>
+      
+      <h2>GET /messages.xml</h2>
+      <p>Returns a list of all messages in you inbox.  Note that every request to the messages API requires HTTP Basic Authentication in the headers of your request.  The username and password must match the username and password of the user account.</p>
+      
+      
+      <h1>Deprecated Posting API</h1>
+      
+      <p>The items below are deprecated, but still work.  It is strongly advised you post directly using the method above.  If you use this, and some hacker ILTC's you, you can't say I didn't warn you.</p>
+      
+      <h2>POST /create/[story_id].xml</h2>
+      <p>
+        Create a new root post in the given <code>story_id</code>.  In the POST request body, 3 form encoded variables are required: <code>body</code>, <code>username</code>, <code>password</code>, and they all do just what it seems like they would do.
+      </p>
+      
+      
+      <h2>POST /create/[story_id]/[post_id].xml</h2>
+      <p>
+        Create a new reply to the post with <code>post_id</code> in the story with <code>story_id</code>.  Expects a POST request body in the same format as creating a root post.
+      </p>      
       
       
       <blockquote>

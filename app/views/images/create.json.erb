@@ -1,0 +1,7 @@
+<%= 
+  if @file_url
+    { :success => @file_url }.to_json
+  else
+    { :error => @error}.to_json
+  end
+%>

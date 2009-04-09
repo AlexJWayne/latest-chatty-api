@@ -22,3 +22,10 @@ set :chmod755,    "config public vendor script script/* public/disp*"
 role :app, domain
 role :web, domain
 role :db,  domain, :primary => true
+
+
+
+desc "Stream log from production server"
+task :log, :roles => :app do
+  stream "tail -f #{current_path}/log/production.log"
+end

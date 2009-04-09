@@ -5,4 +5,5 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   filter_parameter_logging :password, :image
   session :off
+  after_filter OutputCompressionFilter
 end

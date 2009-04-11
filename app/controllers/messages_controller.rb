@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
     @messages = Message.fetch(@username, @password)
   end
   
-  def read
+  def update
     @response = Message.read(@username, @password, params[:id])
   end
   

@@ -10,6 +10,13 @@ class PrivateRequest
       
       request = (options[:post] ? Net::HTTP::Post : Net::HTTP::Get).new(url.path)
       request['Cookie'] = cookie.string
+      
+      if options[:headers]
+        options[:headers].each do |key, value|
+          request[key] = value
+        end
+      end
+      
       request.set_form_data options[:post] if options[:post]
     
       @response = Net::HTTP.new(url.host, url.port).start { |http| http.request(request) }

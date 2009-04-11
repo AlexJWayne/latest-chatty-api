@@ -35,6 +35,7 @@ class Message
   # This doesn't seem to work yet.
   def self.read(username, password, message_id)
     response = PrivateRequest.new(username, password, "http://www.shacknews.com/msgcenter/_read.x?id=#{message_id}")
+    puts response.status.inspect
     if response.status != :not_authorized
       response.status
     else

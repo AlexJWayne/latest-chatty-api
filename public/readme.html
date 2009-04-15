@@ -56,6 +56,7 @@
       
       <p>The below examples are all XML, but JSON is supported as well.  Simply replace the ".xml" with a ".json" in the url.  When using json, you can get a javascript callback if you add a <code>?callback=mySnazzyCallback</code> to the end of the url.</p>
       
+      <a name="threads"></a>
       <h1>Chat Threads</h1>
       
       <h2>
@@ -84,7 +85,7 @@
         Get the entire tree of posts for a thread with has a root post with a specific <code>root_post_id</code>.  This gets all children of those posts with full content for the entire tree.
       </p>
       
-      
+      <a name="posting"></a>
       <h1>Posting</h1>
       
       <h2>POST http://www.shacknews.com/extras/post_laryn_iphone.x</h2>
@@ -100,6 +101,7 @@
       </ul>
       
       
+      <a name="stories"></a>
       <h1>Stories</h1>
       
       <h2>GET /stories.xml</h2>
@@ -109,13 +111,14 @@
       <p>Returns a single full story with all the HTML content for that story.</p>
       
       
-      
+      <a name="users"></a>
       <h1>Users</h1>
       
       <h2>GET /users/[username].xml</h2>
       <p>Returns public data for a single user.</p>
       
       
+      <a name="messages"></a>
       <h1>Messages</h1>
       
       <p>All message actions require HTTP Basic Authentication in the headers of your request that matches the user account.</p>

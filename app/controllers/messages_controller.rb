@@ -10,6 +10,15 @@ class MessagesController < ApplicationController
     render :text => "Message ##{params[:id]} read", :status => '200 OK'
   end
   
+  def create
+    @response = Message.create(@username, @password, {
+      :to => params[:to],
+      :subject => params[:subject],
+      :body => params[:body]
+    })    
+    render :text => "Message Sent!", :status => '201 Created'
+  end
+  
   protected
     def auth
       authenticate_or_request_with_http_basic do |username, password|

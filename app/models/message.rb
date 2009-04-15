@@ -35,11 +35,31 @@ class Message
   # This doesn't seem to work yet.
   def self.read(username, password, message_id)
     response = PrivateRequest.new(username, password, "http://www.shacknews.com/msgcenter/_read.x?id=#{message_id}")
-    puts response.status.inspect
     if response.status != :not_authorized
       response.status
     else
       true
+    end
+  end
+  
+  def self.create(username, password, attributes)
+    attributes = {
+      # Hidden Fields
+      :mode => 'new',
+      :id => '',
+      :from => username,
+      :saveon => '1',
+      
+      # Visible fields
+      :to => attributes[:to],
+      :subject => attributes[:subject],
+      :bodytext => attributes[:body],
+    }
+    response = PrivateRequest.new(username, password, "http://www.shacknews.com/msgcenter/send_message.x", :post => attributes)
+    if response.status != :not_authorized
+      response.status
+    else
+      false
     end
   end
   

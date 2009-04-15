@@ -118,8 +118,22 @@
       
       <h1>Messages</h1>
       
+      <p>All message actions require HTTP Basic Authentication in the headers of your request that matches the user account.</p>
+      
       <h2>GET /messages.xml</h2>
-      <p>Returns a list of all messages in you inbox.  Note that every request to the messages API requires HTTP Basic Authentication in the headers of your request.  The username and password must match the username and password of the user account.</p>
+      <p>Returns a list of all messages in your inbox.</p>
+      
+      <h2>POST /messages.xml (NOT FUNCTIONAL YET)</h2>
+      <p>Send a message.  It accepts the following POST variables, all required.</p>
+      
+      <ul>
+        <li><code>to</code>: Username of the message recipient</li>
+        <li><code>subject</code>: Subject of the message</li>
+        <li><code>body</code>: The text content of the message</li>
+      </ul>
+      
+      <h2>PUT /messages/[message_id].xml</h2>
+      <p>Mark the message with the provided ID as read.  <em>This does not work yet, but this hook should still be called as it will work one day.</em></p>
       
       
       <h1>Deprecated Posting API</h1>

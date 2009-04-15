@@ -7,6 +7,7 @@ class MessagesController < ApplicationController
   
   def update
     @response = Message.read(@username, @password, params[:id])
+    render :text => "Message ##{params[:id]} read", :status => '200 OK'
   end
   
   protected

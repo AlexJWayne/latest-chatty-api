@@ -39,6 +39,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :messages
   map.resources :images
   
+  map.search 'search.:format',      :controller => 'search'
   
   map.root                          :controller => 'parse', :format => 'xml'
   map.root_index 'index.:format',   :controller => 'parse', :format => 'xml'

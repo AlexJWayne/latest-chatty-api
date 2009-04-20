@@ -1,0 +1,5 @@
+<% if params[:callback] %>
+  <%= params[:callback] %>(<%= "[#{@posts.collect(&:to_json).join(',')}]" %>)
+<% else %>
+  <%= "[#{@posts.collect(&:to_json).join(',')}]" %>
+<% end %>

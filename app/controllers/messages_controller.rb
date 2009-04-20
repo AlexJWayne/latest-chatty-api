@@ -17,15 +17,5 @@ class MessagesController < ApplicationController
       :body => params[:body]
     })    
     render :text => "Message Sent!", :status => '201 Created'
-  end
-  
-  protected
-    def auth
-      authenticate_or_request_with_http_basic do |username, password|
-        @username = username
-        @password = password
-        LoginCookie.new(username, password).success?
-      end
-    end
-    
+  end    
 end

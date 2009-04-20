@@ -6,4 +6,13 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :image
   session :off
   after_filter OutputCompressionFilter
+  
+  protected
+    def auth
+      authenticate_or_request_with_http_basic do |username, password|
+        @username = username
+        @password = password
+        LoginCookie.new(username, password).success?
+      end
+    end
 end

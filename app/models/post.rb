@@ -28,7 +28,10 @@ class Post
   def initialize(xml, options = {})
     # setup an empty array for collecting child posts
     @children = []
-  
+    
+    # abort further setup if no XML was passed in
+    return unless xml
+    
     # Save the parent post
     @parent = options[:parent]
     

@@ -1,5 +1,5 @@
 class Post
-  attr_accessor :id, :author, :date, :preview, :body, :children, :parent, :category, :reply_count, :last_reply_id
+  attr_accessor :id, :author, :date, :preview, :body, :children, :parent, :category, :reply_count, :last_reply_id, :story_name, :story_id
   
   def self.create(body, options)
     username  = options[:username]
@@ -100,7 +100,7 @@ class Post
   end
   
   def to_hash
-    {
+    attributes = {
       :id => @id,
       :author => @author,
       :date => @date,
@@ -111,6 +111,10 @@ class Post
       :category => @category,
       :comments => @children.collect(&:to_hash),
     }
+    attributes[:story_id]   = @story_id   if @story_id
+    attributes[:story_name] = @story_name if @story_name
+    
+    attributes
   end
   
   def to_json

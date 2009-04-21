@@ -1,5 +1,5 @@
 <% if params[:callback] %>
-  <%= params[:callback] %>(<%= "[#{@posts.collect(&:to_json).join(',')}]" %>)
+  <%= params[:callback] %>(<%= "{\"comments\":[#{@posts.collect(&:to_json).join(',')}]}" %>)
 <% else %>
-  <%= "[#{@posts.collect(&:to_json).join(',')}]" %>
+  <%= "{\"comments\":[#{@posts.collect(&:to_json).join(',')}]}" %>
 <% end %>

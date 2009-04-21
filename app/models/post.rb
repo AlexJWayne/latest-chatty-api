@@ -117,8 +117,8 @@ class Post
     attributes
   end
   
-  def to_json
-    to_hash.to_json
+  def to_json(options = {})
+    to_hash.to_json(options)
   end
   
   private

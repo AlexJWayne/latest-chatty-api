@@ -59,8 +59,8 @@ class Story
     }
   end
   
-  def to_json
-    attributes.to_json
+  def to_json(options = {})
+    attributes.to_json(options)
   end
   
   def to_xml(options = {})

@@ -1,5 +1,5 @@
-<% if params[:callback] %>
-  <%= params[:callback] %>(<%= "{\"comments\":[#{@posts.collect(&:to_json).join(',')}]}" %>)
-<% else %>
-  <%= "{\"comments\":[#{@posts.collect(&:to_json).join(',')}]}" %>
-<% end %>
+<%= json_callback :comments => @posts,
+                  :author => params[:author],
+                  :parent_author => params[:parent_author],
+                  :terms => params[:terms]
+%>

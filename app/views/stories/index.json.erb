@@ -1,5 +1,1 @@
-<% if params[:callback] %>
-  <%= params[:callback] %>(<%= "[#{@stories.collect(&:to_json).join(',')}]" %>)
-<% else %>
-  <%= "[#{@stories.collect(&:to_json).join(',')}]" %>
-<% end %>
+<%= json_callback @stories %>

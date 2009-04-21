@@ -58,7 +58,7 @@ end
 # Handle component requests by not compressing the output from a component
 module ActionController
   # These methods are available in both the production and test Request objects.
-  class AbstractRequest
+  class Request
     def is_component_request=(val)  #:nodoc:
       @is_component_request = val
     end

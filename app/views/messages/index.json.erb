@@ -1,1 +1,1 @@
-<%= { :user => @username, :messages => @messages }.to_json %>
+<%= json_callback { :user => @username, :messages => @messages } %>

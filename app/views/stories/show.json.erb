@@ -1,5 +1,1 @@
-<% if params[:callback] %>
-  <%= params[:callback] %>(<%= @story.to_json %>)
-<% else %>
-  <%= @story.to_json %>
-<% end %>
+<%= json_callback @story %>

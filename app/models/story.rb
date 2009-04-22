@@ -5,8 +5,7 @@ class Story
     url = "http://www.shacknews.com/"
     
     # get stories
-    parser = LibXML::XML::HTMLParser.new
-    parser.string = Downloader.get(url).clean_html
+    parser = LibXML::XML::HTMLParser.string(Downloader.get(url).clean_html, :options => HTML_PARSER_OPTIONS)
     page = parser.parse.root
     
     news = page.find_first('.//div[contains(@class, "news")]')
@@ -26,8 +25,7 @@ class Story
   end
   
   def parse_html(html)
-    parser = LibXML::XML::HTMLParser.new
-    parser.string = html
+    parser = LibXML::XML::HTMLParser.string(html, :options => HTML_PARSER_OPTIONS)
     page = parser.parse.root
     
     story = page.find_first('.//div[contains(@class, "story")]')

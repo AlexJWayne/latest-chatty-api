@@ -19,8 +19,7 @@ class Search
       http.request request
     end
     
-    parser = LibXML::XML::HTMLParser.new
-    parser.string = response.body.clean_html
+    parser = LibXML::XML::HTMLParser.string(response.body.clean_html, :options => HTML_PARSER_OPTIONS)
     page = parser.parse.root
     
     posts = []

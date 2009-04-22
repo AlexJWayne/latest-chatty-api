@@ -19,8 +19,7 @@ class Feed
     end
     
     # Get root post content
-    parser = LibXML::XML::HTMLParser.new
-    parser.string = Downloader.get(url).clean_html
+    parser = LibXML::XML::HTMLParser.string(Downloader.get(url).clean_html, :options => HTML_PARSER_OPTIONS)
     page = parser.parse.root
     
     

@@ -42,8 +42,7 @@ class Post
     if options[:parse_children]
       # Get the content for a thread.  This should only be done for the root post.
       post_content_feed ||= begin
-        parser = LibXML::XML::HTMLParser.new
-        parser.string = bench('get feed') { Downloader.get("http://www.shacknews.com/frame_laryn.x?root=#{@id}") }
+        parser = LibXML::XML::HTMLParser.string(Downloader.get("http://www.shacknews.com/frame_laryn.x?root=#{@id}"), :options => HTML_PARSER_OPTIONS)
         parser.parse.root
       end
     end

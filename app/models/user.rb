@@ -8,7 +8,7 @@ class User
     # get user
     url = "http://www.shacknews.com/profile/#{username}"
     parser = LibXML::XML::HTMLParser.new
-    parser.string = open(url).read.clean_html
+    parser.string = Downloader.get(url).clean_html
     page = parser.parse.root
     
     block_array = page.find('.//div[contains(@class, "thirdc")]')

@@ -6,7 +6,7 @@ class Story
     
     # get stories
     parser = LibXML::XML::HTMLParser.new
-    parser.string = open(url).read.clean_html
+    parser.string = Downloader.get(url).clean_html
     page = parser.parse.root
     
     news = page.find_first('.//div[contains(@class, "news")]')
@@ -21,7 +21,7 @@ class Story
   def initialize(story_id = nil)
     if story_id
       url = "http://www.shacknews.com/onearticle.x/#{story_id}"
-      parse_html open(url).read.clean_html
+      parse_html Downloader.get(url).clean_html
     end
   end
   

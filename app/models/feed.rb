@@ -20,14 +20,14 @@ class Feed
     
     # Get root post content
     parser = LibXML::XML::HTMLParser.new
-    parser.string = open(url).read.clean_html
+    parser.string = Downloader.get(url).clean_html
     page = parser.parse.root
     
     
     if options[:parse_children]
       # thread request, so we wont have the story data
       
-      story_page = open("http://www.shacknews.com/laryn.x?id=#{options[:root_id]}").read.clean_html
+      story_page = Downloader.get("http://www.shacknews.com/laryn.x?id=#{options[:root_id]}").clean_html
       story = Story.new
       story.parse_html(story_page)
       

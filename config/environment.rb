@@ -91,6 +91,10 @@ class String
   def clean_html
     self.gsub(/="\s*(.+?)\s*"/, '="\1"')
   end
+  
+  def read
+    self
+  end
 end
 
 # ExceptionNotifier.exception_recipients = %w(ruby@beautifulpixel.com)

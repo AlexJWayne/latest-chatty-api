@@ -15,7 +15,7 @@ class ParseController < ApplicationController
     #rescue for stupid iphone 1.1 bug
     if @feed.posts.empty?
       parser = LibXML::XML::HTMLParser.new
-      parser.string = open("http://www.shacknews.com/laryn.x?id=#{params[:id]}").read
+      parser.string = Downloader.get("http://www.shacknews.com/laryn.x?id=#{params[:id]}")
       page = parser.parse.root
       
       root_id = page.find_first('//div[@class="root"]')[:id].gsub('root_', '').to_i

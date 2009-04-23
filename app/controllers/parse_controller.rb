@@ -12,12 +12,9 @@ class ParseController < ApplicationController
   def thread
     @feed = Feed.new(:root_id => params[:id], :parse_children => true)
     
-    #rescue for stupid iphone 1.1 bug
     if @feed.posts.empty?
-      parser = LibXML::XML::HTMLParser.new
-      parser.string = Downloader.get("http://www.shacknews.com/laryn.x?id=#{params[:id]}")
-      page = parser.parse.root
-      
+      page = Downloader.parse_url("http://www.shacknews.com/laryn.x?id=#{params[:id]}")
+
       root_id = page.find_first('//div[@class="root"]')[:id].gsub('root_', '').to_i
       @feed = Feed.new(:root_id => root_id, :parse_children => true)
     end

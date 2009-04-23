@@ -5,8 +5,7 @@ class Message
     response = PrivateRequest.new(username, password, 'http://www.shacknews.com/msgcenter/')
     
     if response.status != :not_authorized
-      parser = LibXML::XML::HTMLParser.string(response.body, :options => HTML_PARSER_OPTIONS)
-      page = parser.parse.root
+      page = Downloader.parse_string(response.body)
     
       messages = []
     

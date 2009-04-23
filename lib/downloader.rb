@@ -1,6 +1,9 @@
 require 'zlib'
 
 class Downloader
+  HTML_PARSER_OPTIONS = LibXML::XML::HTMLParser::Options::RECOVER |
+                        LibXML::XML::HTMLParser::Options::NOERROR |
+                        LibXML::XML::HTMLParser::Options::NOWARNING
   
   def self.get(url)
     url = URI.parse(url)
@@ -21,7 +24,16 @@ class Downloader
     end
         
     io = StringIO.new(res.body)
-    Zlib::GzipReader.new(io).read
+    Zlib::GzipReader.new(io).read.clean_html
+  end
+  
+  def self.parse_string(string)
+    parser = LibXML::XML::HTMLParser.string(string, :options => HTML_PARSER_OPTIONS)
+    parser.parse.root
+  end
+  
+  def self.parse_url(url)
+    parse_string(get(url))
   end
   
 end

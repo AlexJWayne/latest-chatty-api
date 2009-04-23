@@ -19,8 +19,7 @@ class Search
       http.request request
     end
     
-    parser = LibXML::XML::HTMLParser.string(response.body.clean_html, :options => HTML_PARSER_OPTIONS)
-    page = parser.parse.root
+    page = Downloader.parse_string(response.body.clean_html)
     
     posts = []
     page.find('//div[contains(@class, "interiorcontent")]//tr[@class]').each do |xml|

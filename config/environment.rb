@@ -72,7 +72,6 @@ require 'open-uri'
 
 gem 'libxml-ruby', '=1.1.3'
 require 'libxml'
-HTML_PARSER_OPTIONS = (LibXML::XML::HTMLParser::Options::RECOVER | LibXML::XML::HTMLParser::Options::NOERROR | LibXML::XML::HTMLParser::Options::NOWARNING)
 
 class Object
   def bench(name)

@@ -17,7 +17,9 @@ class Downloader
       req = Net::HTTP::Get.new(url.path, "Accept-Encoding" => "gzip")
       res = Net::HTTP.start(url.host, url.port) { |http| http.request(req) }
       if res.header['location']
-        url = URI.parse(res.header['location'])
+        location = res.header['location']
+        location = "http://shacknews.com#{location}" if location =~ /^\//
+        url = URI.parse(location)
       else
         found = true
       end

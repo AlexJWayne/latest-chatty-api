@@ -6,7 +6,7 @@ class User
     @name = username
     
     # get user
-    url = "http://www.shacknews.com/profile/#{username}"
+    url = "http://www.shacknews.com/profile/#{CGI.escape username}"
     page = Downloader.parse_url(url)
     
     block_array = page.find('.//div[contains(@class, "thirdc")]')

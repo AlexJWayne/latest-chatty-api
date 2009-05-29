@@ -4,7 +4,7 @@ class ImagesController < ApplicationController
   
   def create
     cookie = LoginCookie::ShackPics.new(params[:username], params[:password])
-    if cookie.success?    
+    if cookie.success?
       extension = params[:filename].match(/\.(.+?)$/)[1]
       image_io  = StringIO.new(Base64.decode64(params[:image]))
       image_data = UploadIO.new(image_io, "image/#{extension}", params[:filename])

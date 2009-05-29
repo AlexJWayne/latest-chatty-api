@@ -16,26 +16,26 @@ class User
       next unless h4
       
       name = b.find_first('.//h4').content.strip
-      data = b.find('.//td').collect { |cell| cell.to_s.inner_html.strip.gsub('&#160;', '') }
+      data = b.find('.//td').collect { |cell| cell.to_s.inner_html.gsub('&#160;', ' ').strip }
       
       blocks[name] = data
     end
     
-    # raise blocks['User Info'].inspect
+    raise blocks['User Info'][2].inspect
     
-    # user info block      
+    # user info block
     @join_date = blocks['User Info'][0]
     @age       = blocks['User Info'][1]
     @sex       = blocks['User Info'][2]
     @location  = blocks['User Info'][3]
-    @homepage  = blocks['User Info'][4].inner_html
+    @homepage  = blocks['User Info'][4].inner_html.strip
     
     # gaming handles box
-    @steam     = blocks['Gaming Handles'][0]
-    @xbox_live = blocks['Gaming Handles'][1]
-    @psn       = blocks['Gaming Handles'][2]
-    @wii       = blocks['Gaming Handles'][3]
-    @xfire     = blocks['Gaming Handles'][4]
+    @steam     = blocks['Gaming Handles'][0].to_s.strip
+    @xbox_live = blocks['Gaming Handles'][1].to_s.strip
+    @psn       = blocks['Gaming Handles'][2].to_s.strip
+    @wii       = blocks['Gaming Handles'][3].to_s.strip
+    @xfire     = blocks['Gaming Handles'][4].to_s.strip
   end
   
   def attributes

@@ -25,7 +25,7 @@ class Device < ActiveRecord::Base
     message_count = messages.select(&:unread).size
     
     new_messages = messages.select do |message|
-      message.unread && Time.parse(message.date) > Settings.last_push
+      message.unread && message.date > Settings.last_push
     end
     
     if new_messages.any?

@@ -61,11 +61,12 @@ class Post
       child_selector = './/div[contains(@class, "capcontainer")]/ul/li'
       
       # Find particpants
-      @participants = []
+      @participants = {}
       xml.find('.//a[contains(@class, "oneline_user")]').each do |author_link|
-        @participants << author_link.to_s.inner_html.gsub('&#13;', '').strip
+        username = author_link.to_s.inner_html.gsub('&#13;', '').strip
+        @participants[username] ||= 0
+        @participants[username] += 1
       end
-      @participants.uniq!
       
     # Child post
     else
@@ -116,7 +117,12 @@ class Post
     }
     attributes[:story_id]     = @story_id     if @story_id
     attributes[:story_name]   = @story_name   if @story_name
-    attributes[:participants] = @participants if @participants
+    
+    if @participants
+      attributes[:participants] = @participants.map do |username, post_count|
+        { :username => username, :post_count => post_count }
+      end
+    end
     
     attributes
   end

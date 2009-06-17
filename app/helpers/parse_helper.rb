@@ -9,10 +9,19 @@ module ParseHelper
       :category => post.category,
     }
     
-    attributes[:last_reply_id] = post.last_reply_id if post.last_reply_id
+    attributes[:last_reply_id]  = post.last_reply_id  if post.last_reply_id
     
     xml.comment attributes do
       xml.body post.body
+      
+      if post.participants
+        xml.participants do
+          post.participants.each do |user|
+            xml.username user
+          end
+        end
+      end
+      
       xml.comments do
         post.children.each do |child|
           render_post(xml, child)

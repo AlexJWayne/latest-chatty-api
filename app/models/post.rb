@@ -1,5 +1,5 @@
 class Post
-  attr_accessor :id, :author, :date, :preview, :body, :children, :parent, :category, :reply_count, :last_reply_id, :story_name, :story_id
+  attr_accessor :id, :author, :date, :preview, :body, :children, :parent, :category, :reply_count, :last_reply_id, :story_name, :story_id, :participants
   
   def self.create(body, options)
     username  = options[:username]
@@ -59,7 +59,14 @@ class Post
       
       cat_node       = xml.find_first('ul/li/div[contains(@class, "fpmod_")]')
       child_selector = './/div[contains(@class, "capcontainer")]/ul/li'
-    
+      
+      # Find particpants
+      @participants = []
+      xml.find('.//a[contains(@class, "oneline_user")]').each do |author_link|
+        @participants << author_link.to_s.inner_html.gsub('&#13;', '').strip
+      end
+      @participants.uniq!
+      
     # Child post
     else
       @author = xml.find_first('.//a[contains(@class, "oneline_user")]').content.strip
@@ -107,8 +114,9 @@ class Post
       :category => @category,
       :comments => @children.collect(&:to_hash),
     }
-    attributes[:story_id]   = @story_id   if @story_id
-    attributes[:story_name] = @story_name if @story_name
+    attributes[:story_id]     = @story_id     if @story_id
+    attributes[:story_name]   = @story_name   if @story_name
+    attributes[:participants] = @participants if @participants
     
     attributes
   end

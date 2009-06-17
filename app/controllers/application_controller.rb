@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   filter_parameter_logging :password, :image
   after_filter OutputCompressionFilter
+  after_filter :check_push
   
   protected
     def auth
@@ -12,6 +13,12 @@ class ApplicationController < ActionController::Base
         @username = username
         @password = password
         LoginCookie.new(username, password).success?
+      end
+    end
+    
+    def check_push
+      if Settings.last_push < 5.minutes.ago
+        Delayed::Job.enqueue Device::PushPerformer.new
       end
     end
 end

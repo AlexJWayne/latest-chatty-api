@@ -17,7 +17,7 @@ module ParseHelper
       if post.participants
         xml.participants do
           post.participants.each do |user, post_count|
-            xml.username user, :posts => post_count
+            xml.particpant user, :posts => post_count
           end
         end
       end

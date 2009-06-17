@@ -9,7 +9,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090617033734) do
+ActiveRecord::Schema.define(:version => 20090617034429) do
+
+  create_table "devices", :force => true do |t|
+    t.string   "token"
+    t.string   "username"
+    t.string   "password"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "settings", :force => true do |t|
     t.string   "var",        :null => false

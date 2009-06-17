@@ -34,10 +34,11 @@ ActionController::Routing::Routes.draw do |map|
   # map.root :controller => "welcome"
 
   # See how all your routes lay out with "rake routes"
-  map.resources :stories
-  map.resources :users
-  map.resources :messages
-  map.resources :images
+  map.resources :stories,   :only => [:index, :show]
+  map.resources :users,     :only => [:index, :show]
+  map.resources :messages,  :only => [:index, :show]
+  map.resources :images,    :only => [:create]
+  map.resource  :devices,   :only => [:create, :destroy]
   
   map.search 'search.:format',      :controller => 'search'
   

@@ -3,7 +3,7 @@ class CreateDevices < ActiveRecord::Migration
     create_table :devices do |t|
       t.string :token
       t.string :username
-      t.strstring :password
+      t.string :password
 
       t.timestamps
     end

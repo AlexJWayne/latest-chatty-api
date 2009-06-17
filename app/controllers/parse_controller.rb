@@ -21,4 +21,9 @@ class ParseController < ApplicationController
     
     render :action => 'index'
   end
+  
+  def push
+    Delayed::Job.enqueue Device::PushPerformer.new
+    render :text => 'Push Began...'
+  end
 end

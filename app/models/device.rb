@@ -1,4 +1,10 @@
 class Device < ActiveRecord::Base
+  class PushPerformer
+    def perform
+      Device.push_new_messages
+    end
+  end
+  
   def self.push_new_messages
     # Only push to devices for a month without re-registering
     Device.delete_all(['updated_at < ?', 1.month.ago])
@@ -8,6 +14,10 @@ class Device < ActiveRecord::Base
     
     # Set last push check time
     Settings.last_push = Time.now
+  end
+  
+  def self.perform
+    push_new_messages
   end
   
   def push_new_messages

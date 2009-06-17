@@ -42,13 +42,15 @@ ActionController::Routing::Routes.draw do |map|
   
   map.search 'search.:format',      :controller => 'search'
   
+  map.push 'push', :controller => 'parse', :action => 'push'
+  
   map.root                          :controller => 'parse', :format => 'xml'
   map.root_index 'index.:format',   :controller => 'parse', :format => 'xml'
   map.story ':id.:format',          :controller => 'parse'
   map.story ':id.:page.:format',    :controller => 'parse'
   map.thread 'thread/:id.:format',  :controller => 'parse', :action => 'thread'
   
-  map.create_root 'create/:story_id.:format',       :controller => 'create', :action => 'index'
+  map.create_root  'create/:story_id.:format',      :controller => 'create', :action => 'index'
   map.create_reply 'create/:story_id/:id.:format',  :controller => 'create', :action => 'index'
   
 end

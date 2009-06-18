@@ -17,9 +17,8 @@ class ApplicationController < ActionController::Base
     end
     
     def check_push
-      if Settings.last_push_started < 5.minutes.ago
-        Settings.last_push_started = Time.now
-        # Delayed::Job.enqueue Device::PushPerformer.new
-      end
+      # if Settings.last_push < 5.minutes.ago
+      #   Delayed::Job.enqueue Device::PushPerformer.new
+      # end
     end
 end

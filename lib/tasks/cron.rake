@@ -1,3 +1,3 @@
 task :cron => :environment do
-  Device.push_new_messages
+  Device.push
 end

@@ -20,7 +20,7 @@ class Message
             :from     => row.find_first('.//td[contains(@class, "shackname")]//a').content,
             :subject  => row.find_first('.//td[contains(@class, "subject")]//a').content,
             :unread   => row.find_first('.//td[contains(@class, "subject")]')[:class].include?('unread'),
-            :date     => row.find_first('.//td[contains(@class, "date")]').content,
+            :date     => Time.parse(row.find_first('.//td[contains(@class, "date")]').content),
             :body     => page.find_first("//tr[@id='msgview_#{id}']//div[@id='msgcopy']").to_s.inner_html.gsub(/^&#13;|&#13;$/, '').strip,
           })
         end

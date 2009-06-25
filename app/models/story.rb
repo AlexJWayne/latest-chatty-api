@@ -28,9 +28,6 @@ class Story
     
     story = page.find_first('.//div[contains(@class, "story")]')
     
-    puts "----"
-    puts story.to_s
-    
     @id   = story.find_first('h1//a').attributes[:href].split('/').last.to_i
     @name = story.find_first('h1//a').content
     @date = story.find_first('.//span[contains(@class, "date")]').to_s.inner_html.strip

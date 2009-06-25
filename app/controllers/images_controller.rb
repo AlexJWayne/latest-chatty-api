@@ -18,8 +18,6 @@ class ImagesController < ApplicationController
       parser.string = response.body
       page = parser.parse.root
       
-      puts response.body
-      
       @file_url = page.find_first("//input[@id='link11']")[:value]
       render :status => :created
       

@@ -1,3 +1,5 @@
+require 'ezcrypto'
+
 class Device < ActiveRecord::Base
   class PushPerformer
     def perform
@@ -38,5 +40,17 @@ class Device < ActiveRecord::Base
     end
     
     update_attribute :last_push, Time.now
+  end
+  
+  def encryption_key
+    @encryption_key ||= EzCrypto::Key.with_password(username, Settings.salt)
+  end
+  
+  def password
+    encryption_key.decrypt(password_encrypted)
+  end
+  
+  def password=(new_password)
+    self.password_encrypted = encryption_key.encrypt(new_password)
   end
 end

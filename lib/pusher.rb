@@ -12,8 +12,7 @@ class Pusher
         :badge => options[:badge],
         :sound => 'default',
       },
-      :message_id => options[:message_id]
-    }
+    }.merge(options[:custom])
     
     message = payload.to_json
 

@@ -33,7 +33,7 @@ class Device < ActiveRecord::Base
     end
     
     if new_messages.any?
-      Pusher.push(token, "New Message from #{new_messages.last.from}", :badge => message_count)
+      Pusher.push(token, "New Message from #{new_messages.last.from}", :badge => message_count, :message_id => messages.last.id)
       logger.info "Pushed #{new_messages.size} message(s) to <#{token}>"
     end
     

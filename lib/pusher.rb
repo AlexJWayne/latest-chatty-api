@@ -11,7 +11,8 @@ class Pusher
         :alert => message,
         :badge => options[:badge],
         :sound => 'default',
-      }
+      },
+      :message_id => options[:message_id]
     }
     
     message = payload.to_json

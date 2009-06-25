@@ -10,7 +10,7 @@ class Search
     cookie = response['set-cookie'].match(/shackon=.*?;/)[0]
     
     # Get the search results
-    search_url = "http://www.shacknews.com/search.x?type=comments&terms=#{options[:terms]}&cs_user=#{options[:author]}&cs_parentauthor=#{options[:parent_author]}&s_type=all"
+    search_url = "http://www.shacknews.com/search.x?type=comments&terms=#{URI.escape options[:terms].to_s}&cs_user=#{URI.escape options[:author].to_s}&cs_parentauthor=#{URI.escape options[:parent_author].to_s}&s_type=all"
     uri = URI.parse(search_url)
     request = Net::HTTP::Get.new("#{uri.path}?#{uri.query}")
     request['Cookie'] = cookie

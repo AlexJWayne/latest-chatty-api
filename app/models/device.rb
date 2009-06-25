@@ -47,10 +47,10 @@ class Device < ActiveRecord::Base
   end
   
   def password
-    encryption_key.decrypt(password_encrypted)
+    encryption_key.decrypt64(password_encrypted)
   end
   
   def password=(new_password)
-    self.password_encrypted = encryption_key.encrypt(new_password)
+    self.password_encrypted = encryption_key.encrypt64(new_password)
   end
 end

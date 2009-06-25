@@ -1,5 +1,8 @@
 require 'zlib'
 
+# Supress non fatal parse errors
+LibXML::XML::Error.set_handler(&LibXML::XML::Error::QUIET_HANDLER)
+
 class Downloader
   HTML_PARSER_OPTIONS = LibXML::XML::HTMLParser::Options::RECOVER |
                         LibXML::XML::HTMLParser::Options::NOERROR |

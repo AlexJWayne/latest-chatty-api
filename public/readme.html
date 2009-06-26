@@ -54,33 +54,52 @@
       
       <p>All urls are relative to <code><a href="http://shackchatty.com/">http://shackchatty.com/</a></code></p>
       
-      <p>The below examples are all XML, but JSON is supported as well.  Simply replace the ".xml" with a ".json" in the url.  When using json, you can get a javascript callback if you add a <code>?callback=mySnazzyCallback</code> to the end of the url.</p>
+      <strong>FORMATS:</strong>
+      <ul>
+        <li>JSON <code>.json</code></li>
+        <li>XML  <code>.xml</code></li>
+      </ul>
+      
+      <p>
+        All api requests supports all formats.  Simply replace <code>.fmt</code> in the oaths below with the proper extension for the format you want.  For example:<br/>
+        <code>/thread/1234.json</code><br/>
+        <code>/thread/1234.xml</code>
+      </p>
+      
+      <p>All formats contains the same information, but it may be organized slightly differently.</p>
+      
+      <p>
+        Note the when using <code>.json</code>, you can get a javascript callback if you add a callback parameter to the query string like so:<br/>
+        <code>/thread/1234?callback=mySnazzyCallback</code><br/>
+        This allows to make calls to the API and parse the results in client side javascript with any server side code at all.
+        Just <code>eval</code> the response and you now have passed a javascript object with all your data to your callback function.
+      </p>
       
       <a name="threads"></a>
       <h1>Chat Threads</h1>
       
       <h2>
         GET /<br/>
-        GET /index.xml
+        GET /index.fmt
       </h2>
       <p>
         Retrieve a list of page 1 root posts in the latest chatty.  This does not get the children of those posts, only the root posts.
       </p>
       
       
-      <h2>GET /[story_id].xml</h2>
+      <h2>GET /[story_id].fmt</h2>
       <p>
         Retrieve a list of page 1 root posts in the news story with a specific <code>story_id</code>.  This does not get the children of those posts, only the root posts.
       </p>
       
       
-      <h2>GET /[story_id].[page_number].xml</h2>
+      <h2>GET /[story_id].[page_number].fmt</h2>
       <p>
         Retrieve a list of root posts in the news story with a specific <code>story_id</code> on page <code>page_number</code>.  This does not get the children of those posts, only the root posts.
       </p>
       
       
-      <h2>GET /thread/[root_post_id].xml</h2>
+      <h2>GET /thread/[root_post_id].fmt</h2>
       <p>
         Get the entire tree of posts for a thread with has a root post with a specific <code>root_post_id</code>.  This gets all children of those posts with full content for the entire tree.
       </p>
@@ -104,17 +123,17 @@
       <a name="stories"></a>
       <h1>Stories</h1>
       
-      <h2>GET /stories.xml</h2>
+      <h2>GET /stories.fmt</h2>
       <p>Returns a list of all stories currently on the homepage.  Story body is limited to what the homepage content is truncated to.</p>
       
-      <h2>GET /stories/[story_id].xml</h2>
+      <h2>GET /stories/[story_id].fmt</h2>
       <p>Returns a single full story with all the HTML content for that story.</p>
       
       
       <a name="users"></a>
       <h1>Users</h1>
       
-      <h2>GET /users/[username].xml</h2>
+      <h2>GET /users/[username].fmt</h2>
       <p>Returns public data for a single user.</p>
       
       
@@ -123,10 +142,10 @@
       
       <p>All message actions require HTTP Basic Authentication in the headers of your request that matches the user account.</p>
       
-      <h2>GET /messages.xml</h2>
+      <h2>GET /messages.fmt</h2>
       <p>Returns a list of all messages in your inbox.</p>
       
-      <h2>POST /messages.xml</h2>
+      <h2>POST /messages.fmt</h2>
       <p>Send a message.  It accepts the following POST variables, all required.</p>
       
       <ul>
@@ -135,14 +154,22 @@
         <li><code>body</code>: The text content of the message</li>
       </ul>
       
-      <h2>PUT /messages/[message_id].xml (NOT FUNCTIONAL YET)</h2>
-      <p>Mark the message with the provided ID as read.</p>
+      <h2>PUT /messages/[message_id].fmt</h2>
+      <p>
+        Mark the message with the provided ID as read.<br/>
+        DOESN'T WORK yet, but your client should call it anyway to make sure everything it does work.
+      </p>
       
       
       <a name="search"></a>
       <h1>Search</h1>
       
-      <h2>GET /search.xml?author=[username]&parent_author=[parent_author_username]&terms=[search_phrase]</h2>
+      <h2>
+        GET /search.fmt?<br/>
+        &nbsp; author=[username]&<br/>
+        &nbsp; parent_author=[parent_author_username]&<br/>
+        &nbsp; terms=[search_phrase]
+      </h2>
       <p>Get the results of a search with the requested parameters.</p>
       
       
@@ -150,13 +177,13 @@
       
       <p>The items below are deprecated, but still work.  It is strongly advised you post directly using the method above.  If you use this, and some hacker ILTC's you, you can't say I didn't warn you.</p>
       
-      <h2>POST /create/[story_id].xml</h2>
+      <h2>POST /create/[story_id].fmt</h2>
       <p>
         Create a new root post in the given <code>story_id</code>.  In the POST request body, 3 form encoded variables are required: <code>body</code>, <code>username</code>, <code>password</code>, and they all do just what it seems like they would do.
       </p>
       
       
-      <h2>POST /create/[story_id]/[post_id].xml</h2>
+      <h2>POST /create/[story_id]/[post_id].fmt</h2>
       <p>
         Create a new reply to the post with <code>post_id</code> in the story with <code>story_id</code>.  Expects a POST request body in the same format as creating a root post.
       </p>      

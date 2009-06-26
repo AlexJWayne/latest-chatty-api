@@ -72,7 +72,7 @@
         Note the when using <code>.json</code>, you can get a javascript callback if you add a callback parameter to the query string like so:<br/>
         <code>/thread/1234?callback=mySnazzyCallback</code><br/>
         This allows to make calls to the API and parse the results in client side javascript with any server side code at all.
-        Just <code>eval</code> the response and you now have passed a javascript object with all your data to your callback function.
+        Just use a URL with a callback as the <code>src</code> of a script tag a javascript object with the response will be passed to your callback function.
       </p>
       
       <a name="threads"></a>

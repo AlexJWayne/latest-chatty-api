@@ -10,7 +10,7 @@ class Pusher
       :aps => {
         :alert => message,
         :badge => options[:badge],
-        :sound => 'default',
+        :sound => 'push.caf',
       },
     }.merge(options[:custom])
     

@@ -1,13 +1,6 @@
 require 'ezcrypto'
 
 class Device < ActiveRecord::Base
-  class PushPerformer
-    def perform
-      # Device.push
-      Device.push_dev
-    end
-  end
-  
   before_create :set_last_push
   
   def self.push
@@ -36,7 +29,7 @@ class Device < ActiveRecord::Base
     end
     
     if new_messages.any?
-      Pusher.push(token, "New Message from #{new_messages.last.from}", :badge => message_count, :custom => { :message_id => messages.last.id })
+      Pusher.push_dev(token, "New Message from #{new_messages.last.from}", :badge => message_count, :custom => { :message_id => messages.last.id })
       logger.info "Pushed #{new_messages.size} message(s) to <#{token}>"
     end
     

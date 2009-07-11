@@ -21,7 +21,7 @@ class Pusher
     context = OpenSSL::SSL::SSLContext.new
     context.cert = OpenSSL::X509::Certificate.new(Settings.push_cert)
     context.key = OpenSSL::PKey::RSA.new(Settings.push_cert)
-    # openssl pkcs12 -in mycert.p12 -out client-cert.pem -nodes -clcerts  
+    # openssl pkcs12 -in mycert.p12 -out client-cert.pem -nodes -clcerts
     
     sock = TCPSocket.new('gateway.sandbox.push.apple.com', 2195)
     ssl = OpenSSL::SSL::SSLSocket.new(sock,context)

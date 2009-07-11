@@ -31,7 +31,7 @@ class Pusher
     sock.close
   end
   
-  def self.push_dev
+  def self.push_dev(device_token, message, options = {})
     key = [device_token.delete(' ')].pack('H*')
     
     payload = {

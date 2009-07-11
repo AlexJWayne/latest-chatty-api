@@ -3,7 +3,7 @@ require 'ezcrypto'
 class Device < ActiveRecord::Base
   class PushPerformer
     def perform
-      Device.push
+      # Device.push
       Device.push_dev
     end
   end

@@ -137,6 +137,18 @@
       <p>Returns public data for a single user.</p>
       
       
+      <a name="auth"></a>
+      <h1>Authentication Check</h1>
+      
+      <h2>POST /auth.fmt</h2>
+      <p>Will return a "200 OK" if the provided credentials are valid, or a "403 Forbidden" if they are not.  It requires that you send the following variables in the POST body:</p>
+      
+      <ul>
+        <li><code>username</code></li>
+        <li><code>password</code></li>
+      </ul>
+      
+      
       <a name="messages"></a>
       <h1>Messages</h1>
       

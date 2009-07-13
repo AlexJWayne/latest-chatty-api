@@ -40,6 +40,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :images,    :only => [:create]
   map.resource  :devices,   :only => [:create, :destroy]
   
+  map.auth 'auth.:format', :controller => 'auth', :action => 'create'
+  
   map.search 'search.:format',      :controller => 'search'
   
   map.push 'push', :controller => 'parse', :action => 'push'

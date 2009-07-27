@@ -1,11 +1,12 @@
 class AuthController < ApplicationController
   def create
-    @success = LoginCookie.new(params[:username], params[:password]).success?
-    
-    if @success
-      render
+    if params[:username] && params[:password]
+      @success = LoginCookie.new(params[:username], params[:password]).success?
+      render :status => :forbidden unless @success
     else
-      render :status => :forbidden
+      authenticate_or_request_with_http_basic do |username, password|
+        @success = LoginCookie.new(username, password).success?
+      end
     end
   end
 

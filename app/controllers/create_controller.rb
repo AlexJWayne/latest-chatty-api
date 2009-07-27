@@ -1,18 +1,21 @@
 class CreateController < ApplicationController
   
   def index
-    login_url = "http://www.shacknews.com/login_laryn.x"
-    response = Post.create(params[:body], {
-      :username   => params[:username],
-      :password   => params[:password],
-      :parent_id  => params[:id],
-      :story_id   => params[:story_id]
-    })
+    username, password = params[:username], params[:password]
     
-    if response == :not_authorized
-      render :text => '<error>Authentication failed</error>', :status => '403 Forbidden', :content_type => 'text/xml'
-    else
-      render :text => '<success>Comment posted</success>', :status => '201 Created', :content_type => 'text/xml'
+    authenticate_or_request_with_http_basic do |username, password|
+      if @success = LoginCookie.new(username, password).success?
+        response = Post.create(params[:body], {
+          :username   => username,
+          :password   => password,
+          :parent_id  => params[:id],
+          :story_id   => params[:story_id]
+        })
+        
+        render :status => :created
+      else
+        false
+      end
     end
   end
   

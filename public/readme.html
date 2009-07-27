@@ -79,7 +79,6 @@
       <h1>Chat Threads</h1>
       
       <h2>
-        GET /<br/>
         GET /index.fmt
       </h2>
       <p>
@@ -105,19 +104,19 @@
       </p>
       
       <a name="posting"></a>
-      <h1>Posting</h1>
+      <h1>Posting Comments</h1>
       
-      <h2>POST http://www.shacknews.com/extras/post_laryn_iphone.x</h2>
+      <p>These calls post new comments.  They require HTTP Basic credentials for the user you want to post under.  They take a single variable in the post body named <code>body</code> which contains the content of the comment to be posted.
       
-      <p>Simply send a POST request to this URL with the following form encoded variables in the request body</p>
+      <h2>POST /create/[story_id].fmt</h2>
+      <p>
+        Create a new root post in the given <code>story_id</code>
+      </p>
       
-      <ul>
-        <li><code>iuser</code>: username</li>
-        <li><code>ipass</code>: password</li>
-        <li><code>parent</code>: The ID of the post that is being replied to.  Leave blank it its a new root post.</li>
-        <li><code>group</code>: The story ID this post is getting attached to.</li>
-        <li><code>body</code>: The text content of the comment.</li>
-      </ul>
+      <h2>POST /create/[story_id]/[post_id].fmt</h2>
+      <p>
+        Create a new reply to the post with <code>post_id</code> in the story with <code>story_id</code>.
+      </p>
       
       
       <a name="stories"></a>
@@ -141,12 +140,7 @@
       <h1>Authentication Check</h1>
       
       <h2>POST /auth.fmt</h2>
-      <p>Will return a "200 OK" if the provided credentials are valid, or a "403 Forbidden" if they are not.  It requires that you send the following variables in the POST body:</p>
-      
-      <ul>
-        <li><code>username</code></li>
-        <li><code>password</code></li>
-      </ul>
+      <p>Will return a "200 OK" if the provided credentials are valid, or a "401 Unauthorized" if they are not.  Username and password should be passed along in the request headers via HTTP Basic Authentication.
       
       
       <a name="messages"></a>
@@ -183,22 +177,6 @@
         &nbsp; terms=[search_phrase]
       </h2>
       <p>Get the results of a search with the requested parameters.</p>
-      
-      
-      <h1>Deprecated Posting API</h1>
-      
-      <p>The items below are deprecated, but still work.  It is strongly advised you post directly using the method above.  If you use this, and some hacker ILTC's you, you can't say I didn't warn you.</p>
-      
-      <h2>POST /create/[story_id].fmt</h2>
-      <p>
-        Create a new root post in the given <code>story_id</code>.  In the POST request body, 3 form encoded variables are required: <code>body</code>, <code>username</code>, <code>password</code>, and they all do just what it seems like they would do.
-      </p>
-      
-      
-      <h2>POST /create/[story_id]/[post_id].fmt</h2>
-      <p>
-        Create a new reply to the post with <code>post_id</code> in the story with <code>story_id</code>.  Expects a POST request body in the same format as creating a root post.
-      </p>      
       
       
       <blockquote>

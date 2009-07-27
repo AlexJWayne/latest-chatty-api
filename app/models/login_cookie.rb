@@ -1,5 +1,15 @@
 class LoginCookie
-  attr_reader :string, :status
+  attr_reader :string, :status, :expire_date
+  
+  @@default = nil
+  
+  def self.default
+    if @@default.nil? || @@default.expired?
+      @@default = new(Settings.default_user[:username], Settings.default_user[:password])
+      RAILS_DEFAULT_LOGGER.info "Fetched new LoginCookie default expiring at #{@@default.expire_date}"
+    end
+    @@default
+  end
   
   def initialize(username, password)
     response = Net::HTTP.post_form(URI.parse('http://www.shacknews.com/login_laryn.x'), {
@@ -13,16 +23,24 @@ class LoginCookie
       
       @string = "user=#{username}; pass=#{encrypted_password}"
       @status = :success
+      @expire_date = Time.parse(pass_cookie.match(/expires=(.*?);/)[1])
     else
       @status = :not_authorized
     end
+    
   end
   
   def success?
     @status == :success
   end
   
+  def current?
+    expire_date > 1.hour.ago
+  end
   
+  def expired?
+    !current?
+  end
   
   class ShackPics < LoginCookie
     def initialize(username, password)

@@ -18,6 +18,7 @@ class Downloader
       path << "?#{url.query}" if url.query && url.query.any?
       
       req = Net::HTTP::Get.new(url.path, "Accept-Encoding" => "gzip")
+      req['Cookie'] = LoginCookie.default.string
       res = Net::HTTP.start(url.host, url.port) { |http| http.request(req) }
       if res.header['location']
         location = res.header['location']

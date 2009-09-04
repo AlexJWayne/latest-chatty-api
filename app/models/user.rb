@@ -21,8 +21,6 @@ class User
       blocks[name] = data
     end
     
-    raise blocks['User Info'][2].inspect
-    
     # user info block
     @join_date = blocks['User Info'][0]
     @age       = blocks['User Info'][1]

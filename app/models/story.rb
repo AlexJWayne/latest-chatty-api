@@ -28,17 +28,19 @@ class Story
     
     story = page.find_first('.//div[contains(@class, "story")]')
     
-    @id   = story.find_first('h1//a').attributes[:href].split('/').last.to_i
-    @name = story.find_first('h1//a').content
-    @date = story.find_first('.//span[contains(@class, "date")]').to_s.inner_html.strip
+    if story
+      @id   = story.find_first('h1//a').attributes[:href].split('/').last.to_i
+      @name = story.find_first('h1//a').content
+      @date = story.find_first('.//span[contains(@class, "date")]').to_s.inner_html.strip
     
-    @body = story.find_first('div[contains(@class, "body")]').to_s.inner_html.gsub('&#13;', '').strip
-    @body.gsub! /<a.+?Read more<\/a>/, ''
-    @body.gsub! '...', ''
-    @body.strip!
+      @body = story.find_first('div[contains(@class, "body")]').to_s.inner_html.gsub('&#13;', '').strip
+      @body.gsub! /<a.+?Read more<\/a>/, ''
+      @body.gsub! '...', ''
+      @body.strip!
     
-    @preview = @body.gsub(/<.+?>/, '')
-    @comment_count = page.find_first('//span[contains(@class, "commentcount")]').content.to_i
+      @preview = @body.gsub(/<.+?>/, '')
+      @comment_count = page.find_first('//span[contains(@class, "commentcount")]').content.to_i
+    end
   end
   
   def attributes

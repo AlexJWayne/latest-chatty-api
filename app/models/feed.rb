@@ -35,7 +35,7 @@ class Feed
       
       story = page.find_first('.//div[contains(@class, "story")]//h1//a')
       unless @story_id = options[:story_id]
-        @story_id = story[:href].gsub('/onearticle.x/', '') if story
+        @story_id = story[:href].gsub(/^.*onearticle\.x\//, '') if story
       end
 
       @story_name = story.content if story

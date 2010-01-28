@@ -86,7 +86,7 @@ class Post
     @preview.gsub!(/\s+/, ' ')                                      # remove consecutive spaces
     @preview.gsub!(/<span class="jt_spoiler".+?<\/span>/, '______') # remove spoilers
     @preview.gsub!(/<.+?>/, '')                                     # strip all html tags
-    @preview = @preview[0..150]                                     # truncate to 150 character max
+    @preview = @preview[0..500]                                     # truncate to 500 character max
     
     # Grab category
     @category = cat_node.attributes[:class].split(' ').find { |cls| cls =~ /mod_/ }.gsub(/^(fp|ol)mod_/, '') if cat_node

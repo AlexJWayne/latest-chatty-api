@@ -10,6 +10,8 @@ class ParseController < ApplicationController
   end
   
   def thread
+    return render(:text => 'Thread too big!') if params[:id].to_s == '22004750'
+    
     @feed = Feed.new(:root_id => params[:id], :parse_children => true)
     
     if @feed.posts.empty?

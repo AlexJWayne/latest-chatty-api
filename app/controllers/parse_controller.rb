@@ -16,9 +16,16 @@ class ParseController < ApplicationController
     
     if @feed.posts.empty?
       page = Downloader.parse_url("http://www.shacknews.com/laryn.x?id=#{params[:id]}")
-
-      root_id = page.find_first('//div[@class="root"]')[:id].gsub('root_', '').to_i
-      @feed = Feed.new(:root_id => root_id, :parse_children => true)
+      
+      if root_node = page.find_first('//div[@class="root"]')
+        root_id = root_node[:id].gsub('root_', '').to_i
+        @feed = Feed.new(:root_id => root_id, :parse_children => true)
+      else
+        no_post = Post.new(nil)
+        no_post.preview = 'Post not found...'
+        no_post.body = 'Post not found...'
+        @feed.posts << no_post
+      end
     end
     
     render :action => 'index'

@@ -3,11 +3,18 @@
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
+  
+  before_filter :enforce_format
+  
   filter_parameter_logging :password, :image
   after_filter OutputCompressionFilter
   after_filter :check_push
   
   protected
+    def enforce_format
+      params[:format] = 'json' unless %w( xml json ).include?(params[:format] && params[:format].downcase)
+    end
+  
     def auth
       authenticate_or_request_with_http_basic do |username, password|
         @username = username

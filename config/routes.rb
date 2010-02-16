@@ -36,7 +36,7 @@ ActionController::Routing::Routes.draw do |map|
   # See how all your routes lay out with "rake routes"
   map.resources :stories,   :only => [:index, :show]
   map.resources :users,     :only => [:index, :show]
-  map.resources :messages,  :only => [:index, :show]
+  map.resources :messages,  :only
   map.resources :images,    :only => [:create]
   map.resource  :devices,   :only => [:create, :destroy]
   

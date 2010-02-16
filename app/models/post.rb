@@ -70,9 +70,9 @@ class Post
       
     # Child post
     else
-      @author = xml.find_first('.//a[contains(@class, "oneline_user")]').content.strip
-      @date   = post_content_feed.find_first("//div[@id='item_#{@id}']//div[contains(@class, 'postdate')]").content.strip
-      @body   = post_content_feed.find_first(".//div[@id='item_#{@id}']//div[contains(@class, 'postbody')]").to_s.inner_html.strip
+      @author = xml.find_first('.//a[contains(@class, "oneline_user")]').content.strip      
+      @date   = post_content_feed.find_first(".//div[@id='item_#{@id}']//div[contains(@class, 'postdate')]").content.strip         rescue nil
+      @body   = post_content_feed.find_first(".//div[@id='item_#{@id}']//div[contains(@class, 'postbody')]").to_s.inner_html.strip rescue nil
       @reply_count = xml.find('.//li').size
       
       cat_node       = xml.find_first('div[contains(@class, "olmod_")]')

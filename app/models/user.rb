@@ -21,19 +21,23 @@ class User
       blocks[name] = data
     end
     
-    # user info block
-    @join_date = blocks['User Info'][0]
-    @age       = blocks['User Info'][1]
-    @sex       = blocks['User Info'][2]
-    @location  = blocks['User Info'][3]
-    @homepage  = blocks['User Info'][4].inner_html.strip
+    if page.find_first('.//div[contains(@class, "profilemain")]').content.strip =~ /No such user/
+      @name = "User not found"
+    else
+      # user info block
+      @join_date = blocks['User Info'][0]
+      @age       = blocks['User Info'][1]
+      @sex       = blocks['User Info'][2]
+      @location  = blocks['User Info'][3]
+      @homepage  = blocks['User Info'][4].inner_html.strip
     
-    # gaming handles box
-    @steam     = blocks['Gaming Handles'][0].to_s.strip
-    @xbox_live = blocks['Gaming Handles'][1].to_s.strip
-    @psn       = blocks['Gaming Handles'][2].to_s.strip
-    @wii       = blocks['Gaming Handles'][3].to_s.strip
-    @xfire     = blocks['Gaming Handles'][4].to_s.strip
+      # gaming handles box
+      @steam     = blocks['Gaming Handles'][0].to_s.strip
+      @xbox_live = blocks['Gaming Handles'][1].to_s.strip
+      @psn       = blocks['Gaming Handles'][2].to_s.strip
+      @wii       = blocks['Gaming Handles'][3].to_s.strip
+      @xfire     = blocks['Gaming Handles'][4].to_s.strip
+    end
   end
   
   def attributes

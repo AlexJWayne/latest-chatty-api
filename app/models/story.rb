@@ -31,7 +31,7 @@ class Story
     if story
       @id   = story.find_first('h1//a').attributes[:href].split('/').last.to_i
       @name = story.find_first('h1//a').content
-      @date = story.find_first('.//span[contains(@class, "date")]').to_s.inner_html.strip
+      @date = Time.parse(story.find_first('.//span[contains(@class, "date")]').to_s.inner_html.strip)
     
       @body = story.find_first('div[contains(@class, "body")]').to_s.inner_html.gsub('&#13;', '').strip
       @body.gsub! /<a.+?Read more<\/a>/, ''

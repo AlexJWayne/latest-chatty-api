@@ -49,7 +49,7 @@ class Post
     # Root post
     if is_root?(xml)
       @author = xml.find_first('.//span[contains(@class, "author")]/a').content.strip
-      @date   = xml.find_first('.//div[contains(@class, "postdate")]').content.strip
+      @date   = Time.parse(xml.find_first('.//div[contains(@class, "postdate")]').content.strip)
       @body   = xml.find_first('.//div[contains(@class, "postbody")]').to_s.inner_html.strip
       @reply_count   = xml.find_first('.//p[contains(@class, "capnote")]/a/strong').to_s.inner_html.gsub('&#13;', '').strip.to_i
       
@@ -71,7 +71,7 @@ class Post
     # Child post
     else
       @author = xml.find_first('.//a[contains(@class, "oneline_user")]').content.strip      
-      @date   = post_content_feed.find_first(".//div[@id='item_#{@id}']//div[contains(@class, 'postdate')]").content.strip         rescue nil
+      @date   = Time.parse(post_content_feed.find_first(".//div[@id='item_#{@id}']//div[contains(@class, 'postdate')]").content.strip) rescue nil
       @body   = post_content_feed.find_first(".//div[@id='item_#{@id}']//div[contains(@class, 'postbody')]").to_s.inner_html.strip rescue nil
       @reply_count = xml.find('.//li').size
       

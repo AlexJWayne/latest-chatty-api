@@ -65,7 +65,7 @@ class Message
     @id   = options[:id]
     @from = options[:from]
     @subject = options[:subject]
-    @date = options[:date]
+    @date = options[:date].is_a?(Time) ? options[:date] : Time.parse(options[:date])
     @body = options[:body]
     @unread = options[:unread]
   end

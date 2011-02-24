@@ -13,8 +13,9 @@ module NewApi
     signature = Digest::MD5.hexdigest "key=#{KEY}&secret=#{SECRET}&time#{Time.now.to_i}"
   end
   
-  def self.chatty
-    response = NewApi.get '/api/chat/index.json',
+  def self.chatty(id = nil)
+    id = 'index' if !id || id.blank?
+    response = NewApi.get "/api/chat/#{id}.json",
                     :key => KEY,
                     :time => Time.now.to_i,
                     :signature => signature

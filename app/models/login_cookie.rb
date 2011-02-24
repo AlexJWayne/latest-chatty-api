@@ -35,6 +35,7 @@ class LoginCookie
   end
   
   def current?
+    @expire_date ||= 1.year.ago
     expire_date > 1.hour.ago
   end
   

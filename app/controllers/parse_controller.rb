@@ -9,7 +9,7 @@ class ParseController < ApplicationController
     render :json => {
       :page       => '1',
       :last_page  => chatty['page_count'],
-      :story_name => 'Some Chatty',
+      :story_name => chatty['title'],
       :story_id   => '1',
       :comments   => convert_comments(chatty['comments'])
     }.to_json
@@ -19,7 +19,14 @@ class ParseController < ApplicationController
   end
   
   def thread
-    
+    chatty = NewApi.thread(params[:id])['data']
+    render :json => {
+      :page       => '1',
+      :last_page  => chatty['page_count'],
+      :story_name => 'Some Chatty',
+      :story_id   => '1',
+      :comments   => convert_comments(chatty['comments'])
+    }.to_json
     
     # return render(:text => 'Thread too big!') if params[:id].to_s == '22004750'
     # 
@@ -51,7 +58,7 @@ private
   def convert_comments(comments)
     comments.map do |comment|
       comment['category']       = comment['mod_type']
-      comment['date']           = comment['post_time']
+      comment['date']           = Time.parse(comment['post_time'])
       comment['author']         = comment['user']
       comment['reply_count']    = comment['post_count']
       comment['last_reply_id']  = comment['last_id']

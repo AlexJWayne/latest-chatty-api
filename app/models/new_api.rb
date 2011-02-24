@@ -21,4 +21,12 @@ module NewApi
                     :signature => signature
     JSON.parse response.body
   end
+  
+  def self.thread(id)
+    response = NewApi.get "/api/chat/thread/#{id}.json",
+                    :key => KEY,
+                    :time => Time.now.to_i,
+                    :signature => signature
+    JSON.parse response.body
+  end
 end

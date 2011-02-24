@@ -5,8 +5,17 @@ class ParseController < ApplicationController
   # end
   
   def index
-    Feed.work_safe = request.subdomains.include?('ws')
-    @feed = Feed.new(:story_id => params[:id], :page => params[:page], :parse_children => false)
+    # Feed.work_safe = request.subdomains.include?('ws')
+    # @feed = Feed.new(:story_id => params[:id], :page => params[:page], :parse_children => false)
+    
+    chatty = NewApi.chatty['data']
+    render :json => {
+      :page       => '1',
+      :last_page  => chatty['page_count'],
+      :story_name => '(No story support in API)',
+      :story_id   => '1',
+      :comments   => convert_comments(chatty['comments'])
+    }.to_json
   end
   
   def thread
@@ -35,4 +44,18 @@ class ParseController < ApplicationController
     # Delayed::Job.enqueue Device::PushPerformer.new
     # render :text => 'Push Began...'
   end
+  
+private
+  def convert_comments(comments)
+    comments.map do |comment|
+      comment['category']       = comment['mod_type']
+      comment['date']           = comment['post_time']
+      comment['author']         = comment['user']
+      comment['reply_count']    = comment['post_count']
+      comment['last_reply_id']  = comment['last_id']
+      comment['comments']       = comment['comments'] ? convert_comments(comment['comments']) : []
+      comment
+    end
+  end
+  
 end

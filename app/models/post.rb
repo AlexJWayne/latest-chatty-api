@@ -52,7 +52,7 @@ class Post
 
     # Root post
     if is_root?(xml)
-      @author = xml.find_first('.//span[contains(@class, "author")]/a').content.strip
+      @author = xml.find_first('.//span[contains(@class, "user")]').content.strip
       @date   = Time.parse(xml.find_first('.//div[contains(@class, "postdate")]').content.strip)
       @body   = xml.find_first('.//div[contains(@class, "postbody")]').to_s.inner_html.strip
       @reply_count   = xml.find_first('.//p[contains(@class, "capnote")]/a/strong').to_s.inner_html.gsub('&#13;', '').strip.to_i

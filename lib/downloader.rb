@@ -28,9 +28,10 @@ class Downloader
         found = true
       end
     end
-        
-    io = StringIO.new(res.body)
-    Zlib::GzipReader.new(io).read.clean_html
+    
+    res.body
+    # io = StringIO.new(res.body)
+    # Zlib::GzipReader.new(io).read.clean_html
   end
   
   def self.parse_string(string)

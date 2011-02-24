@@ -15,12 +15,11 @@ class Feed
     elsif options[:root_id]
       url = "http://www.shacknews.com/frame_laryn.x?root=#{options[:root_id]}&id=#{options[:root_id]}&mode=refresh"
     else
-      url = 'http://www.shacknews.com/latestchatty.x'
+      url = 'http://new.shacknews.com/chatty'
     end
     
     # Get root post content
-    page = Downloader.parse_url(url)
-    
+    page = Downloader.parse_url(url)    
     
     if options[:parse_children]
       # thread request, so we wont have the story data

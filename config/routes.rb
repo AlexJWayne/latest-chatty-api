@@ -34,25 +34,25 @@ ActionController::Routing::Routes.draw do |map|
   # map.root :controller => "welcome"
 
   # See how all your routes lay out with "rake routes"
-  map.resources :stories,   :only => [:index, :show]
-  map.resources :users,     :only => [:index, :show]
-  map.resources :messages,  :only
-  map.resources :images,    :only => [:create]
-  map.resource  :devices,   :only => [:create, :destroy]
+  # map.resources :stories,   :only => [:index, :show]
+  # map.resources :users,     :only => [:index, :show]
+  # map.resources :messages,  :only
+  # map.resources :images,    :only => [:create]
+  # map.resource  :devices,   :only => [:create, :destroy]
+  # 
+  # map.auth 'auth.:format', :controller => 'auth', :action => 'create'
+  # 
+  # map.search 'search.:format',      :controller => 'search'
+  # 
+  # map.push 'push', :controller => 'parse', :action => 'push'
   
-  map.auth 'auth.:format', :controller => 'auth', :action => 'create'
+  map.root                                    :controller => 'parse', :format => 'json'
+  map.root_index        'index.:format',      :controller => 'parse', :format => 'json'
+  map.chatty            ':id.:format',        :controller => 'parse', :format => 'json'
+  map.paginated_chatty  ':id.:page.:format',  :controller => 'parse', :format => 'json'
+  map.thread            'thread/:id.:format', :controller => 'parse', :action => 'thread'
   
-  map.search 'search.:format',      :controller => 'search'
-  
-  map.push 'push', :controller => 'parse', :action => 'push'
-  
-  map.root                          :controller => 'parse', :format => 'xml'
-  map.root_index 'index.:format',   :controller => 'parse', :format => 'xml'
-  map.story ':id.:format',          :controller => 'parse'
-  map.story ':id.:page.:format',    :controller => 'parse'
-  map.thread 'thread/:id.:format',  :controller => 'parse', :action => 'thread'
-  
-  map.create_root  'create/:story_id.:format',      :controller => 'create', :action => 'index'
-  map.create_reply 'create/:story_id/:id.:format',  :controller => 'create', :action => 'index'
+  # map.create_root  'create/:story_id.:format',      :controller => 'create', :action => 'index'
+  # map.create_reply 'create/:story_id/:id.:format',  :controller => 'create', :action => 'index'
   
 end

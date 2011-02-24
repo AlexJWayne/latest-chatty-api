@@ -5,12 +5,12 @@ class ParseController < ApplicationController
   # end
   
   def index
-    chatty = NewApi.chatty(params[:id] || 'index')['data']
+    chatty = NewApi.chatty(params[:id] || 'index', :page => params[:page])['data']
     render :json => {
-      :page       => '1',
+      :page       => chatty['page'],
       :last_page  => chatty['page_count'],
       :story_name => chatty['title'],
-      :story_id   => '1',
+      :story_id   => 'index',
       :comments   => convert_comments(chatty['comments'])
     }.to_json
     
@@ -23,7 +23,7 @@ class ParseController < ApplicationController
     render :json => {
       :page       => '1',
       :last_page  => chatty['page_count'],
-      :story_name => 'Some Chatty',
+      :story_name => chatty['title'],
       :story_id   => '1',
       :comments   => convert_comments(chatty['comments'])
     }.to_json

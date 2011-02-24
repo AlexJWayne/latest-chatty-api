@@ -18,16 +18,15 @@ class LoginCookie
       :type     => 'login'
     })
     
-    if pass_cookie = response.to_hash['set-cookie'].find { |cookie| cookie =~ /^pass=/ }
-      encrypted_password = pass_cookie.match(/pass=([a-f0-9]+?);/)[1]
+    if pass_cookie = response.to_hash['set-cookie'].find { |cookie| cookie =~ /^login=/ }
+      cookie_value = pass_cookie.match(/login=(.+?);/)[1]
       
-      @string = "user=#{username}; pass=#{encrypted_password}"
+      @string = "login=#{cookie_value}"
       @status = :success
-      @expire_date = Time.parse(pass_cookie.match(/expires=(.*?);/)[1])
+      @expire_date = Time.parse(pass_cookie.match(/expires=(.*?)$/)[1])
     else
       @status = :not_authorized
     end
-    
   end
   
   def success?
@@ -35,7 +34,6 @@ class LoginCookie
   end
   
   def current?
-    @expire_date ||= 1.year.ago
     expire_date > 1.hour.ago
   end
   

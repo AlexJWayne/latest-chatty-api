@@ -62,7 +62,7 @@ private
       comment['author']         = comment['user']
       comment['reply_count']    = comment['post_count']
       comment['last_reply_id']  = comment['last_id']
-      comment['body']           = CGI.unescapeHTML(comment['body'])
+      comment['body']           = CGI.unescapeHTML(comment['body']).gsub("return doSpoiler( event )", "this.className = ''")
       comment['preview']        = CGI.unescapeHTML(comment['preview'])
       comment['comments']       = comment['comments'] ? convert_comments(comment['comments']) : []
       comment

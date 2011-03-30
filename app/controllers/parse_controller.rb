@@ -65,6 +65,9 @@ private
       comment['body']           = CGI.unescapeHTML(comment['body']).gsub("return doSpoiler( event )", "this.className = ''")
       comment['preview']        = CGI.unescapeHTML(comment['preview'])
       comment['comments']       = comment['comments'] ? convert_comments(comment['comments']) : []
+      
+      comment['body'] = "This API is dead, please change your API server in the app settings to:<br/><br/><pre class='jt_code'>shackapi.stonedonkey.com</pre>"
+      
       comment
     end
   end
